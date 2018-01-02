@@ -13,6 +13,7 @@ public class TestController {
     @RequestMapping("/t")
     public String test() {
         testService.test();
+        //注解
         return "OK";
     }
 }
