@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd"
+		default-lazy-init="true">
+
+	<!-- 数据源配置 -->
+	<bean id="lotteryDataBase" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+        <property name="removeAbandoned">
+            <value>true</value>
+        </property>
+        <property name="removeAbandonedTimeout">
+            <value>60</value>
+        </property>
+       <property name="poolPreparedStatements" value="${jdbc.poolPreparedStatements}"/> 
+       	<property name="minIdle" value="${jdbc.minIdle}"/>
+		<property name="maxIdle" value="${jdbc.maxIdle}"/>
+		<property name="validationQuery" value="${jdbc.validationQuery}"/>
+		<property name="testWhileIdle" value="${jdbc.testWhileIdle}"/>
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}"/>
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/>
+		<property name="numTestsPerEvictionRun" value="${jdbc.numTestsPerEvictionRun}"/>
+		<property name="logAbandoned" value="true"/>
+	</bean>
+
+	<!--事务管理 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="lotteryDataBase" />
+	</bean>
+
+	<!-- 注解方式配置事物 -->  
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>
