@@ -1,0 +1,23 @@
+package com.jack.lottery.utils.exception;
+
+public class ParamException extends BaseException {
+    public ParamException() {
+        super();
+    }
+
+    public ParamException(String message) {
+        super(message);
+    }
+
+    public ParamException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public ParamException(Throwable cause) {
+        super(cause);
+    }
+
+    protected ParamException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
+}

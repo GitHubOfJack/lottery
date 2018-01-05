@@ -31,6 +31,9 @@
     <xom.version>1.2.5</xom.version>
     <maven.war.plugin.version>2.5</maven.war.plugin.version>
     <maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
+    <maven.deploy.plugin.version>2.8.2</maven.deploy.plugin.version>
+    <maven.install.plugin.version>2.5.2</maven.install.plugin.version>
+    <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
     <file.encoding>utf-8</file.encoding>
     <java.version>1.7</java.version>
   </properties>
@@ -272,6 +275,9 @@
           <groupId>org.mybatis.generator</groupId>
           <artifactId>mybatis-generator-maven-plugin</artifactId>
           <version>1.3.2</version>
+          <configuration>
+            <overwrite>true</overwrite>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
