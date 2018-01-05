@@ -26,6 +26,9 @@
     <slf4j.version>1.7.6</slf4j.version>
     <logback.version>1.1.2</logback.version>
     <mybatis.pagehelp>5.0.0</mybatis.pagehelp>
+    <fastjson.version>1.2.28</fastjson.version>
+    <net.sf.json.version>2.4</net.sf.json.version>
+    <xom.version>1.2.5</xom.version>
     <maven.war.plugin.version>2.5</maven.war.plugin.version>
     <maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
     <file.encoding>utf-8</file.encoding>
@@ -190,6 +193,27 @@
       <groupId>com.github.pagehelper</groupId>
       <artifactId>pagehelper</artifactId>
       <version>${mybatis.pagehelp}</version>
+    </dependency>
+
+    <!--fastjson-->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib -->
+    <dependency>
+      <groupId>net.sf.json-lib</groupId>
+      <artifactId>json-lib</artifactId>
+      <version>${net.sf.json.version}</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/xom/xom -->
+    <dependency>
+      <groupId>xom</groupId>
+      <artifactId>xom</artifactId>
+      <version>${xom.version}</version>
     </dependency>
 
     <!--test-->
