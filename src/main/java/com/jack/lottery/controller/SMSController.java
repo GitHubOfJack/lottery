@@ -24,9 +24,8 @@ public class SMSController {
 
     /**
      * 发送验证码短信
-     * userId 用户编号
-     * type = 0  文字验证码
-     * type = 1  语音验证码
+     * @Param userId 用户编号
+     * @Param type = 0  文字验证码   type = 1  语音验证码
      * */
     @RequestMapping("/send")
     public CommonResponose<Boolean> sendMsg(@RequestParam long userId, @RequestParam int type) {

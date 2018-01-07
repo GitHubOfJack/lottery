@@ -54,6 +54,7 @@ public class UserController {
 
     /**
      * 根据手机号查询用户
+     * @Param mobile 手机号
      * */
     public CommonResponose<User> getUserByMobile(@RequestParam String mobile) {
         try {
@@ -69,6 +70,7 @@ public class UserController {
 
     /**
      * 根据昵称查询用户
+     * @Param nickName 用户昵称
      * */
     public CommonResponose<User> getUserByNickName(@RequestParam String nickName) {
         try {
@@ -84,11 +86,11 @@ public class UserController {
 
     /**
      * 注册功能
-     * mobile 手机号
-     * password 密码
-     * code  验证码
-     * smsCode  短信验证码
-     * nickName 昵称
+     * @Param mobile 手机号
+     * @Param password 密码
+     * @Param code  验证码
+     * @Param smsCode  短信验证码
+     * @Param nickName 昵称
      * */
     @RequestMapping("/register")
     public CommonResponose<Boolean> register(@RequestParam String mobile, @RequestParam String password,
@@ -109,6 +111,9 @@ public class UserController {
 
     /**
      * 登录功能--支持密码登录和验证码登录
+     * @Param mobile 手机号
+     * @Param password 用户密码
+     * @Param smsCode 手机验证码
      * */
     public CommonResponose<LoginResponse> login(@RequestParam String mobile, @RequestParam(required = false) String password,
                                                 @RequestParam(required = false) String smsCode) {
