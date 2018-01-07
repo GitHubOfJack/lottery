@@ -3,13 +3,11 @@ package com.jack.lottery.controller;
 import com.jack.lottery.entity.User;
 import com.jack.lottery.service.SMSService;
 import com.jack.lottery.service.UserService;
-import com.jack.lottery.utils.RandomUtils;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.utils.exception.ParamException;
 import com.jack.lottery.vo.CommonResponose;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,9 +21,6 @@ public class SMSController {
 
     @Autowired
     private UserService userService;
-
-    @Value("${sms.content.templet}")
-    private String smsContent;
 
     /**
      * 发送验证码短信
@@ -42,15 +37,7 @@ public class SMSController {
             if (StringUtils.isBlank(mobile)) {
                 throw new ParamException("用户手机号不存在,userId:"+userId);
             }
-            String verificationCode = RandomUtils.getRandomNumber(4);
-            boolean success = false;
-            if (1 == type) {
-                success = smsService.sendVoiceMsg(mobile, verificationCode);
-            } else {
-                smsContent = String.format(smsContent, verificationCode);
-                success = smsService.sendMsg(mobile, smsContent);
-            }
-            return new CommonResponose(success);
+            return new CommonResponose(smsService.send(mobile, type));
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
         }

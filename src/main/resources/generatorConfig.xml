@@ -42,9 +42,14 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
         
-       <table tableName="user" domainObjectName="User">
+       <!--<table tableName="user" domainObjectName="User">
             <generatedKey column="id" sqlStatement="mysql"
                 identity="true" />
+        </table>-->
+
+        <table tableName="sms_code" domainObjectName="SMSCode">
+            <generatedKey column="id" sqlStatement="mysql"
+                          identity="true" />
         </table>
     </context>
 </generatorConfiguration>

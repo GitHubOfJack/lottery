@@ -1,16 +1,21 @@
 package com.jack.lottery.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jack.lottery.entity.SMSCode;
+import com.jack.lottery.mapper.SMSCodeMapper;
+import com.jack.lottery.utils.RandomUtils;
 import com.jack.lottery.utils.URLConnectionUtil;
 import net.sf.json.JSON;
 import net.sf.json.xml.XMLSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 
 @Component
 public class SMSService {
@@ -38,22 +43,48 @@ public class SMSService {
     @Value("${sms.voice.product.code}")
     private String voiceProductCode;
 
+    @Value("${sms.content.templet}")
+    private String smsContent;
+
+    @Autowired
+    private SMSCodeMapper sMSCodeMapper;
+
+    public boolean send(String mobile, int type) {
+        String verificationCode = RandomUtils.getRandomNumber(4);
+        if (1 == type) {
+            return sendVoiceMsg(mobile, verificationCode);
+        } else {
+            return sendMsg(mobile, verificationCode);
+        }
+    }
+
     /**
      * 发送验证码短信
      * */
-    public boolean sendMsg(String mobile, String content) {
+    private boolean sendMsg(String mobile, String verificationCode) {
+        String content = String.format(smsContent, verificationCode);
         String smsParam = createSMSParam(mobile, content, 0);
         String response = URLConnectionUtil.doGet(url, smsParam);
-        return checkResponse(response);
+        if (checkResponse(response)) {
+            //发送成功，插入数据库
+            insertSMSCode(mobile, verificationCode);
+            return true;
+        }
+        return false;
     }
 
     /**
      * 发送语音验证码短信
      * */
-    public boolean sendVoiceMsg(String mobile, String content) {
-        String smsParam = createSMSParam(mobile, content, 1);
+    private boolean sendVoiceMsg(String mobile, String verificationCode) {
+        String smsParam = createSMSParam(mobile, verificationCode, 1);
         String response = URLConnectionUtil.doGet(url, smsParam);
-        return checkResponse(response);
+        if (checkResponse(response)) {
+            //发送成功，插入数据库
+            insertSMSCode(mobile, verificationCode);
+            return true;
+        }
+        return false;
     }
 
     private String createSMSParam(String mobile, String content, int type) {
@@ -97,5 +128,13 @@ public class SMSService {
             return false;
         }
         return true;
+    }
+
+    private void insertSMSCode(String mobile, String code) {
+        SMSCode model = new SMSCode();
+        model.setCode(code);
+        model.setCreateTime(new Date());
+        model.setMobile(mobile);
+        sMSCodeMapper.insert(model);
     }
 }
