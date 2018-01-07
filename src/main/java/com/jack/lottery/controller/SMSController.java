@@ -36,6 +36,7 @@ public class SMSController {
     @RequestMapping("/send")
     public CommonResponose<Boolean> sendMsg(@RequestParam long userId, @RequestParam int type) {
         try {
+            validateSendMsg(userId, type);
             User user = userService.getUserInfoById(userId);
             String mobile = user.getMobile();
             if (StringUtils.isBlank(mobile)) {
@@ -43,15 +44,24 @@ public class SMSController {
             }
             String verificationCode = RandomUtils.getRandomNumber(4);
             boolean success = false;
-            if (0 == type) {
-                smsContent = String.format(smsContent, verificationCode);
-                success = smsService.sendMsg("", smsContent);
+            if (1 == type) {
+                success = smsService.sendVoiceMsg(mobile, verificationCode);
             } else {
-                success = smsService.sendVoiceMsg("", verificationCode);
+                smsContent = String.format(smsContent, verificationCode);
+                success = smsService.sendMsg(mobile, smsContent);
             }
             return new CommonResponose(success);
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    private void validateSendMsg(long userId, int type) throws ParamException {
+        if (0 >= userId) {
+            throw new ParamException("userId不存在");
+        }
+        if (0 != type && 1 != type) {
+            throw new ParamException("type不正确");
         }
     }
 }
