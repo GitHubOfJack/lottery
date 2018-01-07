@@ -7,6 +7,7 @@ public enum ResponseCode {
     INTERFACE_ERROR("2", "远程接口异常"),
     DB_ERROR("3", "数据库异常"),
     UNKNOW_ERROR("4", "未知异常"),
+    NOT_LOGIN("5", "用户未登录"),
     ;
 
     private String resCode;

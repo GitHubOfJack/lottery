@@ -111,8 +111,9 @@ public class UserService {
         if (!password.equals(pwd)) {
             throw new ParamException("密码不正确");
         }
+        String token = UUID.randomUUID().toString();
         LoginResponse resp = new LoginResponse();
-        resp.setToken(UUID.randomUUID().toString());
+        resp.setToken(token);
         resp.setUserId(user.getId());
         return resp;
     }
