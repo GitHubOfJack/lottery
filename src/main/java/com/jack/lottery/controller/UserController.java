@@ -134,4 +134,36 @@ public class UserController {
             return Exception2ResponseUtils.getResponse(e);
         }
     }
+
+    /**
+     * 修改密码
+     * @Param mobile 手机号
+     * @Param oldPwd 旧密码
+     * @Param newPwd 新密码
+     * */
+    public CommonResponose<Boolean> changePwd(@RequestParam String mobile, @RequestParam String oldPwd,
+                                              @RequestParam String newPwd) {
+        try {
+            boolean success = userService.changePwd(mobile, oldPwd, newPwd);
+            return new CommonResponose<>(success);
+        } catch (Exception e) {
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    /**
+     * 重置密码
+     * @Param mobile 手机号
+     * @Param pwd 新密码
+     * @Param code 手机验证码
+     * */
+    public CommonResponose<Boolean> resetPwd(@RequestParam String mobile, @RequestParam String pwd,
+                                             @RequestParam String code) {
+        try {
+            boolean success = userService.resetPwd(mobile, pwd, code);
+            return new CommonResponose<>(success);
+        } catch (Exception e) {
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
 }

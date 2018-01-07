@@ -128,4 +128,32 @@ public class UserService {
         resp.setUserId(user.getId());
         return resp;
     }
+
+    /**
+     * 修改登录密码
+     * */
+    public boolean changePwd(String mobile, String oldPwd, String newPwd) throws BaseException {
+        User user = getUserInfoByMobile(mobile);
+        String password = user.getPassword();
+        oldPwd = MD5Util.encode(oldPwd);
+        if (!password.equals(oldPwd)) {
+            throw new ParamException("密码不正确");
+        }
+        newPwd = MD5Util.encode(newPwd);
+        user.setPassword(newPwd);
+        userMapper.updateByPrimaryKeySelective(user);
+        return true;
+    }
+
+    /**
+     * 重置登录密码
+     * */
+    public boolean resetPwd(String mobile, String pwd, String code) throws BaseException {
+        User user = getUserInfoByMobile(mobile);
+        checkSmsCode(mobile, code);
+        pwd = MD5Util.encode(pwd);
+        user.setPassword(pwd);
+        userMapper.updateByPrimaryKeySelective(user);
+        return true;
+    }
 }
