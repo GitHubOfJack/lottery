@@ -54,7 +54,7 @@ public class UserController {
 
     /**
      * 根据手机号查询用户
-     * @Param mobile 手机号
+     * @param mobile 手机号
      * */
     public CommonResponose<User> getUserByMobile(@RequestParam String mobile) {
         try {
@@ -70,7 +70,7 @@ public class UserController {
 
     /**
      * 根据昵称查询用户
-     * @Param nickName 用户昵称
+     * @param nickName 用户昵称
      * */
     public CommonResponose<User> getUserByNickName(@RequestParam String nickName) {
         try {
@@ -86,11 +86,11 @@ public class UserController {
 
     /**
      * 注册功能
-     * @Param mobile 手机号
-     * @Param password 密码
-     * @Param code  验证码
-     * @Param smsCode  短信验证码
-     * @Param nickName 昵称
+     * @param mobile 手机号
+     * @param password 密码
+     * @param code  验证码
+     * @param smsCode  短信验证码
+     * @param nickName 昵称
      * */
     @RequestMapping("/register")
     public CommonResponose<Boolean> register(@RequestParam String mobile, @RequestParam String password,
@@ -111,9 +111,9 @@ public class UserController {
 
     /**
      * 登录功能--支持密码登录和验证码登录
-     * @Param mobile 手机号
-     * @Param password 用户密码
-     * @Param smsCode 手机验证码
+     * @param mobile 手机号
+     * @param password 用户密码
+     * @param smsCode 手机验证码
      * */
     public CommonResponose<LoginResponse> login(@RequestParam String mobile, @RequestParam(required = false) String password,
                                                 @RequestParam(required = false) String smsCode) {
@@ -137,9 +137,9 @@ public class UserController {
 
     /**
      * 修改密码
-     * @Param mobile 手机号
-     * @Param oldPwd 旧密码
-     * @Param newPwd 新密码
+     * @param mobile 手机号
+     * @param oldPwd 旧密码
+     * @param newPwd 新密码
      * */
     public CommonResponose<Boolean> changePwd(@RequestParam String mobile, @RequestParam String oldPwd,
                                               @RequestParam String newPwd) {
@@ -153,9 +153,9 @@ public class UserController {
 
     /**
      * 重置密码
-     * @Param mobile 手机号
-     * @Param pwd 新密码
-     * @Param code 手机验证码
+     * @param mobile 手机号
+     * @param pwd 新密码
+     * @param code 手机验证码
      * */
     public CommonResponose<Boolean> resetPwd(@RequestParam String mobile, @RequestParam String pwd,
                                              @RequestParam String code) {
