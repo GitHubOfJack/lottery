@@ -116,16 +116,19 @@ public class UserController {
      * @param smsCode 手机验证码
      * */
     public CommonResponose<LoginResponse> login(@RequestParam String mobile, @RequestParam(required = false) String password,
-                                                @RequestParam(required = false) String smsCode) {
+                                                @RequestParam(required = false) String smsCode, HttpServletRequest request) {
         try {
             if (StringUtils.isBlank(mobile)) {
                 throw new ParamException("手机号为空");
             }
+            HttpSession session = request.getSession();
             LoginResponse resp = null;
             if (StringUtils.isNoneBlank(password)) {
                 resp = userService.loginByPwd(mobile, password);
+                session.setAttribute("loginToken", resp.getToken());
             } else if (StringUtils.isNoneBlank(smsCode)) {
                 resp = userService.loginByCode(mobile, smsCode);
+                session.setAttribute("loginToken", resp.getToken());
             } else {
                 throw new ParamException("请选择一种登录方式");
             }
