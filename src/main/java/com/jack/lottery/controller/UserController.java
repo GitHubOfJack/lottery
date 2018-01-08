@@ -56,6 +56,7 @@ public class UserController {
      * 根据手机号查询用户
      * @param mobile 手机号
      * */
+    @RequestMapping("/getUserByMobile")
     public CommonResponose<User> getUserByMobile(@RequestParam String mobile) {
         try {
             if (StringUtils.isBlank(mobile)) {
@@ -72,6 +73,7 @@ public class UserController {
      * 根据昵称查询用户
      * @param nickName 用户昵称
      * */
+    @RequestMapping("/getUserByNickName")
     public CommonResponose<User> getUserByNickName(@RequestParam String nickName) {
         try {
             if (StringUtils.isBlank(nickName)) {
@@ -99,7 +101,8 @@ public class UserController {
         try {
             HttpSession session = request.getSession();
             String sessionCode = (String) session.getAttribute("code");
-            if (StringUtils.isBlank(sessionCode) || StringUtils.isBlank(code) || !sessionCode.equals(code)) {
+            if (StringUtils.isBlank(sessionCode) || StringUtils.isBlank(code) ||
+                    !sessionCode.toLowerCase().equals(code.toLowerCase())) {
                 throw new ParamException("验证码错误");
             }
             userService.registerUser(mobile, password, smsCode, nickName);
@@ -115,6 +118,7 @@ public class UserController {
      * @param password 用户密码
      * @param smsCode 手机验证码
      * */
+    @RequestMapping("/login")
     public CommonResponose<LoginResponse> login(@RequestParam String mobile, @RequestParam(required = false) String password,
                                                 @RequestParam(required = false) String smsCode, HttpServletRequest request) {
         try {
@@ -144,6 +148,7 @@ public class UserController {
      * @param oldPwd 旧密码
      * @param newPwd 新密码
      * */
+    @RequestMapping("/changePwd")
     public CommonResponose<Boolean> changePwd(@RequestParam String mobile, @RequestParam String oldPwd,
                                               @RequestParam String newPwd) {
         try {
@@ -160,6 +165,7 @@ public class UserController {
      * @param pwd 新密码
      * @param code 手机验证码
      * */
+    @RequestMapping("/resetPwd")
     public CommonResponose<Boolean> resetPwd(@RequestParam String mobile, @RequestParam String pwd,
                                              @RequestParam String code) {
         try {

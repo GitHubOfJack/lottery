@@ -2,6 +2,7 @@ package com.jack.lottery.utils.exception;
 
 import com.jack.lottery.vo.CommonResponose;
 import com.jack.lottery.vo.ResponseCode;
+import org.apache.ibatis.annotations.Param;
 
 import java.text.ParseException;
 
@@ -14,6 +15,8 @@ public class Exception2ResponseUtils {
             resp = new CommonResponose(ResponseCode.DB_ERROR, null, e.getMessage());
         } else if (e instanceof InterfaceException) {
             resp = new CommonResponose(ResponseCode.INTERFACE_ERROR, null, e.getMessage());
+        } else if (e instanceof ParamException) {
+            resp = new CommonResponose(ResponseCode.PARAM_ERROR, null, e.getMessage());
         } else {
             resp = new CommonResponose(ResponseCode.UNKNOW_ERROR, null, e.getMessage());
         }
