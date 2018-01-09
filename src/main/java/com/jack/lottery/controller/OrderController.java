@@ -13,6 +13,7 @@ public class OrderController {
     /**
      * 购买彩票
      * @param userId 用户编号
+     * @see com.jack.lottery.enums.LotteryType
      * @param type 彩种类型
      * @param content 投注内容
      * @param amount 投注金额

@@ -12,7 +12,6 @@ public enum ResponseCode {
 
     private String resCode;
     private String resDesc;
-    private boolean isSuccess;
 
     private ResponseCode(String resCode, String resDesc) {
         this.resCode = resCode;
