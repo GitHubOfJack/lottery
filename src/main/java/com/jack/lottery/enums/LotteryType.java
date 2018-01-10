@@ -1,5 +1,10 @@
 package com.jack.lottery.enums;
 
+import com.jack.lottery.utils.exception.ParamException;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public enum LotteryType {
     SSQ(1, "双色球"),
     DLT(2, "大乐透"),
@@ -22,5 +27,22 @@ public enum LotteryType {
 
     public String getDesc() {
         return desc;
+    }
+
+    private static final Map<Integer, LotteryType> map = new HashMap<>();
+
+    static {
+        LotteryType[] values = LotteryType.values();
+        for (LotteryType type : values) {
+            map.put(type.code, type);
+        }
+    }
+
+    public static LotteryType getTypeByCode(int code) throws ParamException {
+        LotteryType lotteryType = map.get(code);
+        if (null == lotteryType) {
+            throw new ParamException("彩票类型不存在");
+        }
+        return lotteryType;
     }
 }

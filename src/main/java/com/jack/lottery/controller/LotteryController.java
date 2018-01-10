@@ -1,14 +1,19 @@
 package com.jack.lottery.controller;
 
+import com.jack.lottery.entity.LotteryTerm;
+import com.jack.lottery.service.LotteryService;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.vo.CommonResponose;
-import com.jack.lottery.vo.LotteryTerm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/lottery")
 public class LotteryController {
+
+    @Autowired
+    private LotteryService lotteryService;
 
     /**
      * 根据彩票类型获得当前期
@@ -18,7 +23,8 @@ public class LotteryController {
     @RequestMapping("/getCurrentTerm")
     public CommonResponose<LotteryTerm> getCurrentTerm(int type) {
         try {
-            return null;
+            LotteryTerm currentTerm = lotteryService.getCurrentTerm(type);
+            return new CommonResponose<>(currentTerm);
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
         }

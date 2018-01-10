@@ -66,5 +66,10 @@
             <generatedKey column="id" sqlStatement="mysql"
                           identity="true" />
         </table>
+
+        <table tableName="lottery_term" domainObjectName="LotteryTerm">
+            <generatedKey column="id" sqlStatement="mysql"
+                          identity="true" />
+        </table>
     </context>
 </generatorConfiguration>
