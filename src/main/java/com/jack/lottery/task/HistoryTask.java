@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HistoryTask {
 
-    @Scheduled(cron="0 0 0 * * * *")
+    @Scheduled(cron="0 0 0 * * *")
     private void ssq() {
 
     }
