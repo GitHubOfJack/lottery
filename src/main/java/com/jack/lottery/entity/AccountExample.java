@@ -1,5 +1,6 @@
 package com.jack.lottery.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -325,52 +326,52 @@ public class AccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andBalanceEqualTo(Long value) {
+        public Criteria andBalanceEqualTo(BigDecimal value) {
             addCriterion("balance =", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceNotEqualTo(Long value) {
+        public Criteria andBalanceNotEqualTo(BigDecimal value) {
             addCriterion("balance <>", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceGreaterThan(Long value) {
+        public Criteria andBalanceGreaterThan(BigDecimal value) {
             addCriterion("balance >", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceGreaterThanOrEqualTo(Long value) {
+        public Criteria andBalanceGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("balance >=", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceLessThan(Long value) {
+        public Criteria andBalanceLessThan(BigDecimal value) {
             addCriterion("balance <", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceLessThanOrEqualTo(Long value) {
+        public Criteria andBalanceLessThanOrEqualTo(BigDecimal value) {
             addCriterion("balance <=", value, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceIn(List<Long> values) {
+        public Criteria andBalanceIn(List<BigDecimal> values) {
             addCriterion("balance in", values, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceNotIn(List<Long> values) {
+        public Criteria andBalanceNotIn(List<BigDecimal> values) {
             addCriterion("balance not in", values, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceBetween(Long value1, Long value2) {
+        public Criteria andBalanceBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("balance between", value1, value2, "balance");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceNotBetween(Long value1, Long value2) {
+        public Criteria andBalanceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("balance not between", value1, value2, "balance");
             return (Criteria) this;
         }
@@ -385,52 +386,52 @@ public class AccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceEqualTo(Long value) {
+        public Criteria andFreezeBalanceEqualTo(BigDecimal value) {
             addCriterion("freeze_balance =", value, "freezeBalance");
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceNotEqualTo(Long value) {
+        public Criteria andFreezeBalanceNotEqualTo(BigDecimal value) {
             addCriterion("freeze_balance <>", value, "freezeBalance");
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceGreaterThan(Long value) {
+        public Criteria andFreezeBalanceGreaterThan(BigDecimal value) {
             addCriterion("freeze_balance >", value, "freezeBalance");
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceGreaterThanOrEqualTo(Long value) {
+        public Criteria andFreezeBalanceGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("freeze_balance >=", value, "freezeBalance");
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceLessThan(Long value) {
+        public Criteria andFreezeBalanceLessThan(BigDecimal value) {
             addCriterion("freeze_balance <", value, "freezeBalance");
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceLessThanOrEqualTo(Long value) {
+        public Criteria andFreezeBalanceLessThanOrEqualTo(BigDecimal value) {
             addCriterion("freeze_balance <=", value, "freezeBalance");
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceIn(List<Long> values) {
+        public Criteria andFreezeBalanceIn(List<BigDecimal> values) {
             addCriterion("freeze_balance in", values, "freezeBalance");
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceNotIn(List<Long> values) {
+        public Criteria andFreezeBalanceNotIn(List<BigDecimal> values) {
             addCriterion("freeze_balance not in", values, "freezeBalance");
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceBetween(Long value1, Long value2) {
+        public Criteria andFreezeBalanceBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("freeze_balance between", value1, value2, "freezeBalance");
             return (Criteria) this;
         }
 
-        public Criteria andFreezeBalanceNotBetween(Long value1, Long value2) {
+        public Criteria andFreezeBalanceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("freeze_balance not between", value1, value2, "freezeBalance");
             return (Criteria) this;
         }
@@ -445,52 +446,52 @@ public class AccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceEqualTo(Long value) {
+        public Criteria andAvailableBalanceEqualTo(BigDecimal value) {
             addCriterion("available_balance =", value, "availableBalance");
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceNotEqualTo(Long value) {
+        public Criteria andAvailableBalanceNotEqualTo(BigDecimal value) {
             addCriterion("available_balance <>", value, "availableBalance");
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceGreaterThan(Long value) {
+        public Criteria andAvailableBalanceGreaterThan(BigDecimal value) {
             addCriterion("available_balance >", value, "availableBalance");
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceGreaterThanOrEqualTo(Long value) {
+        public Criteria andAvailableBalanceGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("available_balance >=", value, "availableBalance");
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceLessThan(Long value) {
+        public Criteria andAvailableBalanceLessThan(BigDecimal value) {
             addCriterion("available_balance <", value, "availableBalance");
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceLessThanOrEqualTo(Long value) {
+        public Criteria andAvailableBalanceLessThanOrEqualTo(BigDecimal value) {
             addCriterion("available_balance <=", value, "availableBalance");
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceIn(List<Long> values) {
+        public Criteria andAvailableBalanceIn(List<BigDecimal> values) {
             addCriterion("available_balance in", values, "availableBalance");
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceNotIn(List<Long> values) {
+        public Criteria andAvailableBalanceNotIn(List<BigDecimal> values) {
             addCriterion("available_balance not in", values, "availableBalance");
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceBetween(Long value1, Long value2) {
+        public Criteria andAvailableBalanceBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("available_balance between", value1, value2, "availableBalance");
             return (Criteria) this;
         }
 
-        public Criteria andAvailableBalanceNotBetween(Long value1, Long value2) {
+        public Criteria andAvailableBalanceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("available_balance not between", value1, value2, "availableBalance");
             return (Criteria) this;
         }

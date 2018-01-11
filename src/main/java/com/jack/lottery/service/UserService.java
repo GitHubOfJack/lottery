@@ -1,5 +1,7 @@
 package com.jack.lottery.service;
 
+import com.jack.lottery.dao.SMSCodeDao;
+import com.jack.lottery.dao.UserDao;
 import com.jack.lottery.entity.SMSCode;
 import com.jack.lottery.entity.SMSCodeExample;
 import com.jack.lottery.entity.User;
@@ -27,46 +29,30 @@ public class UserService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @Autowired
-    private SMSCodeMapper sMSCodeMapper;
+    private SMSCodeDao smsCodeDao;
 
     /**
      * 根据用户ID查询用户信息
      * */
     public User getUserInfoById(long userId) throws DBException {
-        User user = userMapper.selectByPrimaryKey(userId);
-        if (null == user) {
-            throw new DBException("用户不存在,userId:"+userId);
-        }
-        return user;
+        return userDao.getUserById(userId);
     }
 
     /**
      * 根据用户手机号查询用户信息
      * */
     public User getUserInfoByMobile(String mobile) throws DBException {
-        UserExample example = new UserExample();
-        example.createCriteria().andMobileEqualTo(mobile);
-        List<User> users = userMapper.selectByExample(example);
-        if (null == users || users.isEmpty()) {
-            throw new DBException("用户不存在,mobile:"+mobile);
-        }
-        return users.get(0);
+        return userDao.getUserInfoByMobile(mobile);
     }
 
     /**
      * 根据用户昵称查询用户信息
      * */
     public User getUserInfoByNickName(String nickName) throws DBException {
-        UserExample example = new UserExample();
-        example.createCriteria().andNickNameEqualTo(nickName);
-        List<User> users = userMapper.selectByExample(example);
-        if (null == users || users.isEmpty()) {
-            throw new DBException("用户不存在,nickName:"+nickName);
-        }
-        return users.get(0);
+        return userDao.getUserInfoByNickName(nickName);
     }
 
     /**
@@ -82,22 +68,13 @@ public class UserService {
         password = MD5Util.encode(password);
         user.setPassword(password);
         user.setUpdateTime(now);
-        try {
-            userMapper.insertSelective(user);
-        } catch (DuplicateKeyException e) {
-            throw new ParamException("用户已存在");
-        } catch (Exception e) {
-            throw new DBException("数据库异常", e);
-        }
+        userDao.insertUser(user);
     }
 
-    private void checkSmsCode(String mobile, String smsCode) throws ParamException {
-        SMSCodeExample example = new SMSCodeExample();
-        example.setOrderByClause(" id desc ");
-        example.createCriteria().andMobileEqualTo(mobile);
-        List<SMSCode> smsCodes = sMSCodeMapper.selectByExample(example);
-        if (null == smsCodes || smsCodes.isEmpty() || StringUtils.isBlank(smsCodes.get(0).getCode()) || !smsCode.equals(smsCodes.get(0).getCode())) {
-            throw new ParamException("短信验证码不正确");
+    public void checkSmsCode(String mobile, String smsCode) throws ParamException {
+        SMSCode latestSmsCode = smsCodeDao.getLatestSmsCode(mobile);
+        if (StringUtils.isBlank(latestSmsCode.getCode()) || !smsCode.equals(latestSmsCode.getCode())) {
+            throw new ParamException("验证码不正确");
         }
     }
 
@@ -142,7 +119,7 @@ public class UserService {
         }
         newPwd = MD5Util.encode(newPwd);
         user.setPassword(newPwd);
-        userMapper.updateByPrimaryKeySelective(user);
+        userDao.updateUserByUserId(user);
         return true;
     }
 
@@ -154,7 +131,7 @@ public class UserService {
         checkSmsCode(mobile, code);
         pwd = MD5Util.encode(pwd);
         user.setPassword(pwd);
-        userMapper.updateByPrimaryKeySelective(user);
+        userDao.updateUserByUserId(user);
         return true;
     }
 }

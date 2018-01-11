@@ -1,6 +1,7 @@
 package com.jack.lottery.controller;
 
 import com.jack.lottery.service.OrderService;
+import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.vo.CommonResponose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,14 @@ public class OrderController {
      * type=5 福彩3D   0^1|0^1|0^1
      * */
     @RequestMapping("/buy")
-    public CommonResponose<Boolean> buyLottery(@RequestParam String type, @RequestParam String content,
-                                               @RequestParam BigDecimal amount, @RequestParam int num) {
-        return null;
+    public CommonResponose<Boolean> buyLottery(@RequestParam long userId, @RequestParam String type,
+                                               @RequestParam String content, @RequestParam BigDecimal amount,
+                                               @RequestParam int num) {
+        try {
+            boolean success = orderService.buyLottery(userId, type, content, amount, num);
+            return new CommonResponose<>(success);
+        } catch (Exception e) {
+            return Exception2ResponseUtils.getResponse(e);
+        }
     }
 }

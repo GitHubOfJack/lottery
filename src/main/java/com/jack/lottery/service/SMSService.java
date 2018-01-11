@@ -1,6 +1,7 @@
 package com.jack.lottery.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jack.lottery.dao.SMSCodeDao;
 import com.jack.lottery.entity.SMSCode;
 import com.jack.lottery.mapper.SMSCodeMapper;
 import com.jack.lottery.utils.RandomUtils;
@@ -47,7 +48,7 @@ public class SMSService {
     private String smsContent;
 
     @Autowired
-    private SMSCodeMapper sMSCodeMapper;
+    private SMSCodeDao smsCodeDao;
 
     public boolean send(String mobile, int type) {
         String verificationCode = RandomUtils.getRandomNumber(4);
@@ -67,7 +68,7 @@ public class SMSService {
         String response = URLConnectionUtil.doGet(url, smsParam);
         if (checkResponse(response)) {
             //发送成功，插入数据库
-            insertSMSCode(mobile, verificationCode);
+            smsCodeDao.insertSMSCode(mobile, verificationCode);
             return true;
         }
         return false;
@@ -81,7 +82,7 @@ public class SMSService {
         String response = URLConnectionUtil.doGet(url, smsParam);
         if (checkResponse(response)) {
             //发送成功，插入数据库
-            insertSMSCode(mobile, verificationCode);
+            smsCodeDao.insertSMSCode(mobile, verificationCode);
             return true;
         }
         return false;
@@ -128,13 +129,5 @@ public class SMSService {
             return false;
         }
         return true;
-    }
-
-    private void insertSMSCode(String mobile, String code) {
-        SMSCode model = new SMSCode();
-        model.setCode(code);
-        model.setCreateTime(new Date());
-        model.setMobile(mobile);
-        sMSCodeMapper.insert(model);
     }
 }

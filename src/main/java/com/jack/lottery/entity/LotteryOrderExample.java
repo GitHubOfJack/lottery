@@ -1,5 +1,6 @@
 package com.jack.lottery.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -325,52 +326,52 @@ public class LotteryOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andAmountEqualTo(Long value) {
+        public Criteria andAmountEqualTo(BigDecimal value) {
             addCriterion("amount =", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountNotEqualTo(Long value) {
+        public Criteria andAmountNotEqualTo(BigDecimal value) {
             addCriterion("amount <>", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountGreaterThan(Long value) {
+        public Criteria andAmountGreaterThan(BigDecimal value) {
             addCriterion("amount >", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountGreaterThanOrEqualTo(Long value) {
+        public Criteria andAmountGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("amount >=", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountLessThan(Long value) {
+        public Criteria andAmountLessThan(BigDecimal value) {
             addCriterion("amount <", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountLessThanOrEqualTo(Long value) {
+        public Criteria andAmountLessThanOrEqualTo(BigDecimal value) {
             addCriterion("amount <=", value, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountIn(List<Long> values) {
+        public Criteria andAmountIn(List<BigDecimal> values) {
             addCriterion("amount in", values, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountNotIn(List<Long> values) {
+        public Criteria andAmountNotIn(List<BigDecimal> values) {
             addCriterion("amount not in", values, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountBetween(Long value1, Long value2) {
+        public Criteria andAmountBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("amount between", value1, value2, "amount");
             return (Criteria) this;
         }
 
-        public Criteria andAmountNotBetween(Long value1, Long value2) {
+        public Criteria andAmountNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("amount not between", value1, value2, "amount");
             return (Criteria) this;
         }
