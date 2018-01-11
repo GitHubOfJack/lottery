@@ -2,6 +2,7 @@ package com.jack.lottery.service;
 
 import com.jack.lottery.buss.LotteryBuss;
 import com.jack.lottery.dao.AccountDao;
+import com.jack.lottery.dao.LotteryOrderDao;
 import com.jack.lottery.entity.Account;
 import com.jack.lottery.entity.AccountDetail;
 import com.jack.lottery.entity.LotteryOrder;
@@ -11,11 +12,14 @@ import com.jack.lottery.enums.OrderDetailType;
 import com.jack.lottery.enums.SaleStatus;
 import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.ParamException;
+import com.jack.lottery.vo.QueryOrderResp;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -30,6 +34,9 @@ public class OrderService {
 
     @Autowired
     private OrderOptService orderOptService;
+
+    @Autowired
+    private LotteryOrderDao lotteryOrderDao;
 
     public boolean buyLottery(long userId, String type, String content,
                               BigDecimal amount, int num) throws BaseException {
@@ -80,5 +87,43 @@ public class OrderService {
         accountDetail.setUserid(uerId);
         accountDetail.setAccountid(accountId);
         return accountDetail;
+    }
+
+    public int countByUserIdAndStatus(long userId, String status) {
+        if (!StringUtils.isBlank(status)) {
+            try {
+                LotteryOrderStatus orderStatus = LotteryOrderStatus.getByCode(status);
+            } catch (ParamException e) {
+                status = "";
+            }
+        }
+        return lotteryOrderDao.getOrderCountByUserIdAndStatus(userId, status);
+    }
+
+    public List<LotteryOrder> getOrderListByUserIdAndStatus(long userId, String status, int pageNo, int pageSize) {
+        return lotteryOrderDao.getOrdersByUserIdAndStatus(userId, status, pageNo, pageSize);
+    }
+
+    public QueryOrderResp queryOrder(long userId, String status, int pageNo, int pageSize) {
+        if (!StringUtils.isBlank(status)) {
+            try {
+                LotteryOrderStatus orderStatus = LotteryOrderStatus.getByCode(status);
+            } catch (ParamException e) {
+                status = "";
+            }
+        }
+        if (0 >= pageNo) {
+            pageNo = 1;
+        }
+        if (0 >= pageSize) {
+            pageSize = 10;
+        }
+        int count = countByUserIdAndStatus(userId, status);
+        int page = count % pageSize != 0 ? count / pageSize + 1 : count / pageSize;
+        QueryOrderResp resp = new QueryOrderResp();
+        resp.setTotalPage(page);
+        resp.setTotal(count);
+        resp.setOrders(getOrderListByUserIdAndStatus(userId, status, pageNo, pageSize));
+        return resp;
     }
 }

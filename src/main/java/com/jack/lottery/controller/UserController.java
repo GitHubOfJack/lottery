@@ -1,12 +1,15 @@
 package com.jack.lottery.controller;
 
+import com.jack.lottery.entity.LotteryOrder;
 import com.jack.lottery.entity.User;
+import com.jack.lottery.service.OrderService;
 import com.jack.lottery.service.UserService;
 import com.jack.lottery.utils.VerificationCode;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.utils.exception.ParamException;
 import com.jack.lottery.vo.CommonResponose;
 import com.jack.lottery.vo.LoginResponse;
+import com.jack.lottery.vo.QueryOrderResp;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -28,6 +32,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     /**
      * 获取验证码接口
@@ -171,6 +178,25 @@ public class UserController {
         try {
             boolean success = userService.resetPwd(mobile, pwd, code);
             return new CommonResponose<>(success);
+        } catch (Exception e) {
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    /**
+     * 查询用户所有订单接口
+     * @param userId 用户编号
+     * @see com.jack.lottery.enums.LotteryOrderStatus
+     * @param type 查询类型
+     * @param pageNo 页码
+     * @param pageSize 每页大小
+     * */
+    @RequestMapping("/queryOrder")
+    public CommonResponose<QueryOrderResp> queryOrder(@RequestParam long userId, @RequestParam(required = false) String type,
+                                                      @RequestParam int pageNo, @RequestParam int pageSize) {
+        try {
+            QueryOrderResp resp = orderService.queryOrder(userId, type, pageNo, pageSize);
+            return new CommonResponose<>(resp);
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
         }
