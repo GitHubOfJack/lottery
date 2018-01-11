@@ -38,6 +38,16 @@ public enum LotteryType {
         }
     }
 
+    public static LotteryType getTypeByCode(String code) throws ParamException {
+        int codeInt = -1;
+        try {
+            codeInt = Integer.parseInt(code);
+        } catch (NumberFormatException e) {
+            throw new ParamException("彩票类型不存在");
+        }
+        return getTypeByCode(codeInt);
+    }
+
     public static LotteryType getTypeByCode(int code) throws ParamException {
         LotteryType lotteryType = map.get(code);
         if (null == lotteryType) {

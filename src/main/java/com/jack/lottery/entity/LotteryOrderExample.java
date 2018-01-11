@@ -375,6 +375,66 @@ public class LotteryOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andNumIsNull() {
+            addCriterion("num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumIsNotNull() {
+            addCriterion("num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumEqualTo(Integer value) {
+            addCriterion("num =", value, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumNotEqualTo(Integer value) {
+            addCriterion("num <>", value, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumGreaterThan(Integer value) {
+            addCriterion("num >", value, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("num >=", value, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumLessThan(Integer value) {
+            addCriterion("num <", value, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumLessThanOrEqualTo(Integer value) {
+            addCriterion("num <=", value, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumIn(List<Integer> values) {
+            addCriterion("num in", values, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumNotIn(List<Integer> values) {
+            addCriterion("num not in", values, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumBetween(Integer value1, Integer value2) {
+            addCriterion("num between", value1, value2, "num");
+            return (Criteria) this;
+        }
+
+        public Criteria andNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("num not between", value1, value2, "num");
+            return (Criteria) this;
+        }
+
         public Criteria andLotteryTypeIsNull() {
             addCriterion("lottery_type is null");
             return (Criteria) this;
@@ -442,6 +502,76 @@ public class LotteryOrderExample {
 
         public Criteria andLotteryTypeNotBetween(String value1, String value2) {
             addCriterion("lottery_type not between", value1, value2, "lotteryType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermIsNull() {
+            addCriterion("lottery_term is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermIsNotNull() {
+            addCriterion("lottery_term is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermEqualTo(String value) {
+            addCriterion("lottery_term =", value, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermNotEqualTo(String value) {
+            addCriterion("lottery_term <>", value, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermGreaterThan(String value) {
+            addCriterion("lottery_term >", value, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermGreaterThanOrEqualTo(String value) {
+            addCriterion("lottery_term >=", value, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermLessThan(String value) {
+            addCriterion("lottery_term <", value, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermLessThanOrEqualTo(String value) {
+            addCriterion("lottery_term <=", value, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermLike(String value) {
+            addCriterion("lottery_term like", value, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermNotLike(String value) {
+            addCriterion("lottery_term not like", value, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermIn(List<String> values) {
+            addCriterion("lottery_term in", values, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermNotIn(List<String> values) {
+            addCriterion("lottery_term not in", values, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermBetween(String value1, String value2) {
+            addCriterion("lottery_term between", value1, value2, "lotteryTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andLotteryTermNotBetween(String value1, String value2) {
+            addCriterion("lottery_term not between", value1, value2, "lotteryTerm");
             return (Criteria) this;
         }
 
