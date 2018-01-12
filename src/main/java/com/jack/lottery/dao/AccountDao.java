@@ -28,4 +28,8 @@ public class AccountDao {
     public void updateAccountById(Account account) {
         accountMapper.updateByPrimaryKeySelective(account);
     }
+
+    public void insertAccount(Account account) {
+        accountMapper.insertSelective(account);
+    }
 }

@@ -1,11 +1,9 @@
 package com.jack.lottery.service;
 
+import com.jack.lottery.dao.AccountDao;
 import com.jack.lottery.dao.SMSCodeDao;
 import com.jack.lottery.dao.UserDao;
-import com.jack.lottery.entity.SMSCode;
-import com.jack.lottery.entity.SMSCodeExample;
-import com.jack.lottery.entity.User;
-import com.jack.lottery.entity.UserExample;
+import com.jack.lottery.entity.*;
 import com.jack.lottery.mapper.SMSCodeMapper;
 import com.jack.lottery.mapper.UserMapper;
 import com.jack.lottery.utils.MD5Util;
@@ -20,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +32,9 @@ public class UserService {
 
     @Autowired
     private SMSCodeDao smsCodeDao;
+
+    @Autowired
+    private UserOptService userOptService;
 
     /**
      * 根据用户ID查询用户信息
@@ -60,6 +62,12 @@ public class UserService {
      * */
     public void registerUser(String mobile, String password, String smsCode, String nickName) throws BaseException {
         checkSmsCode(mobile, smsCode);
+        User user = createUser(mobile, password, nickName);
+        Account account = createAccount();
+        userOptService.doRegister(user, account);
+    }
+
+    private User createUser(String mobile, String password, String nickName) {
         Date now = new Date();
         User user = new User();
         user.setMobile(mobile);
@@ -68,7 +76,18 @@ public class UserService {
         password = MD5Util.encode(password);
         user.setPassword(password);
         user.setUpdateTime(now);
-        userDao.insertUser(user);
+        return user;
+    }
+
+    private Account createAccount() {
+        Account account = new Account();
+        Date now = new Date();
+        account.setAvailableBalance(BigDecimal.ZERO);
+        account.setFreezeBalance(BigDecimal.ZERO);
+        account.setBalance(BigDecimal.ZERO);
+        account.setCreateTime(now);
+        account.setUpdateTime(now);
+        return account;
     }
 
     public void checkSmsCode(String mobile, String smsCode) throws ParamException {

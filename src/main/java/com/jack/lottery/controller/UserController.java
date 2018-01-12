@@ -1,6 +1,5 @@
 package com.jack.lottery.controller;
 
-import com.jack.lottery.entity.LotteryOrder;
 import com.jack.lottery.entity.User;
 import com.jack.lottery.service.OrderService;
 import com.jack.lottery.service.UserService;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")

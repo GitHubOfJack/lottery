@@ -18,7 +18,25 @@ public class OrderController {
     private OrderService orderService;
 
     /**
+     * 账户充值
+     * @param userId 用户编号
+     * @param amount 金额
+     * @param type 充值类型
+     * */
+    @RequestMapping("/recharge")
+    public CommonResponose<Boolean> recharge(@RequestParam long userId, @RequestParam BigDecimal amount,
+                                             @RequestParam String type) {
+        try {
+            boolean success = orderService.recharge(userId, amount, type);
+            return new CommonResponose<>(success);
+        } catch (Exception e) {
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    /**
      * 购买彩票
+     * @param userId 用户编号
      * @see com.jack.lottery.enums.LotteryType
      * @param type 彩种类型
      * @param content 投注内容
