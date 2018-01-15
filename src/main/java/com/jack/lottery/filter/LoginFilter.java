@@ -31,7 +31,9 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String userId = request.getParameter("userId");
+        response.setHeader("Access-Control-Allow-Origin","*");
+        filterChain.doFilter(servletRequest, servletResponse);
+        /*String userId = request.getParameter("userId");
         if (StringUtils.isBlank(userId) || StringUtils.isNumeric(userId) || !checkUser(Long.parseLong(userId))) {
             returnNotLogin(response);
             return;
@@ -54,7 +56,7 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             returnNotLogin(response);
-        }
+        }*/
     }
 
     @Override

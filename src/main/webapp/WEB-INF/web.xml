@@ -36,14 +36,14 @@
   </filter-mapping>
 
   <!-- 用户登录校验filter -->
-  <!--<filter>
+  <filter>
     <filter-name>loginFilter</filter-name>
     <filter-class>com.jack.lottery.filter.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>loginFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>-->
+  </filter-mapping>
 
   <!--Spring上下文监听器-->
   <listener>
