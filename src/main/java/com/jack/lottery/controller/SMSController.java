@@ -66,6 +66,8 @@ public class SMSController {
             int num = mobileCount.get(mobile).intValue();
             if (num <= 5) {
                 mobileCount.put(mobile, num++);
+            } else {
+                throw new SystermException("请5分钟后重试");
             }
         } catch (ExecutionException e) {
             throw new SystermException("手机次数取值错误");
