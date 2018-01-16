@@ -8,6 +8,7 @@ public enum ResponseCode {
     DB_ERROR("3", "数据库异常"),
     UNKNOW_ERROR("4", "未知异常"),
     NOT_LOGIN("5", "用户未登录"),
+    SYSTEM_ERROR("6", "系统异常"),
     ;
 
     private String resCode;

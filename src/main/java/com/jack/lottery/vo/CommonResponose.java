@@ -28,7 +28,7 @@ public class CommonResponose<T> {
 
     public CommonResponose(ResponseCode resp, T data, String appandMsg) {
         this.code = resp.getResCode();
-        this.msg = resp.getResDesc()+":"+appandMsg;
+        this.msg = appandMsg;
         this.data = data;
     }
 

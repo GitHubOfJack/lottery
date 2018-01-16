@@ -1,6 +1,5 @@
 package com.jack.lottery.controller;
 
-import com.jack.lottery.entity.User;
 import com.jack.lottery.service.OrderService;
 import com.jack.lottery.service.UserService;
 import com.jack.lottery.utils.VerificationCode;
@@ -58,16 +57,16 @@ public class UserController {
     }
 
     /**
-     * 根据手机号查询用户
+     * 根据手机号查询用户是否存在
      * @param mobile 手机号
      * */
-    @RequestMapping("/getUserByMobile")
-    public CommonResponose<User> getUserByMobile(@RequestParam String mobile) {
+    @RequestMapping("/mobileExist")
+    public CommonResponose<Boolean> mobileExist(@RequestParam String mobile) {
         try {
             if (StringUtils.isBlank(mobile)) {
-                throw new ParamException("手机号为空");
+                throw new ParamException("手机号为空|mobile="+mobile);
             }
-            return new CommonResponose<>(userService.getUserInfoByMobile(mobile));
+            return new CommonResponose<>(userService.mobileExist(mobile));
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
         }
@@ -75,16 +74,16 @@ public class UserController {
     }
 
     /**
-     * 根据昵称查询用户
+     * 根据昵称查询用户是否存在
      * @param nickName 用户昵称
      * */
-    @RequestMapping("/getUserByNickName")
-    public CommonResponose<User> getUserByNickName(@RequestParam String nickName) {
+    @RequestMapping("/nickNameExist")
+    public CommonResponose<Boolean> nickNameExist(@RequestParam String nickName) {
         try {
             if (StringUtils.isBlank(nickName)) {
-                throw new ParamException("用户昵称为空");
+                throw new ParamException("用户昵称为空|nickName="+nickName);
             }
-            return new CommonResponose<>(userService.getUserInfoByNickName(nickName));
+            return new CommonResponose<>(userService.nickNameExist(nickName));
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
         }

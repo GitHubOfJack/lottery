@@ -44,10 +44,24 @@ public class UserService {
     }
 
     /**
+     * 验证手机号是否存在
+     * */
+    public boolean mobileExist(String mobile) {
+        return userDao.mobileExist(mobile);
+    }
+
+    /**
      * 根据用户手机号查询用户信息
      * */
     public User getUserInfoByMobile(String mobile) throws DBException {
         return userDao.getUserInfoByMobile(mobile);
+    }
+
+    /**
+     * 验证用户昵称是否存在
+     * */
+    public boolean nickNameExist(String nickName) {
+        return userDao.nickNameExist(nickName);
     }
 
     /**

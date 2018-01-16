@@ -34,6 +34,17 @@ public class UserDao {
         return users.get(0);
     }
 
+    public boolean mobileExist(String mobile) {
+        UserExample example = new UserExample();
+        example.createCriteria().andMobileEqualTo(mobile);
+        List<User> users = userMapper.selectByExample(example);
+        if (null == users || users.isEmpty() || null == users.get(0)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public User getUserInfoByNickName(String nickName) throws DBException {
         UserExample example = new UserExample();
         example.createCriteria().andNickNameEqualTo(nickName);
@@ -42,6 +53,17 @@ public class UserDao {
             throw new DBException("用户不存在,nickName:"+nickName);
         }
         return users.get(0);
+    }
+
+    public boolean nickNameExist(String nickName) {
+        UserExample example = new UserExample();
+        example.createCriteria().andNickNameEqualTo(nickName);
+        List<User> users = userMapper.selectByExample(example);
+        if (null == users || users.isEmpty() || null == users.get(0)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void insertUser(User user) throws ParamException, DBException {

@@ -23,7 +23,7 @@ public class LotteryTermDao {
                 .andIscurrentEqualTo(Byte.valueOf("0"));
         List<LotteryTerm> lotteryTerms = lotteryTermMapper.selectByExample(example);
         if (null == lotteryTerms || lotteryTerms.isEmpty()) {
-            throw new ParamException("当前期不存在");
+            throw new ParamException("当前期不存在|type="+type);
         }
         return lotteryTerms.get(0);
     }

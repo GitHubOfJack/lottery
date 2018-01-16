@@ -38,7 +38,7 @@ public enum RechargeType {
     public static RechargeType getTypeByCode(String code) throws ParamException {
         RechargeType rechargeType = map.get(code);
         if (null == rechargeType) {
-            throw new ParamException("充值类型不正确");
+            throw new ParamException("充值类型不正确|充值类型:"+code);
         }
         return rechargeType;
     }

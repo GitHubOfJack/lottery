@@ -40,7 +40,7 @@ public enum RechargeStatus {
     public static RechargeStatus getTypeByCode(String code) throws ParamException {
         RechargeStatus rechargeType = map.get(code);
         if (null == rechargeType) {
-            throw new ParamException("充值类型不正确");
+            throw new ParamException("充值状态不正确");
         }
         return rechargeType;
     }

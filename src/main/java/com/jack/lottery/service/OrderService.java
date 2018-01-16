@@ -42,8 +42,9 @@ public class OrderService {
                               BigDecimal amount, int num) throws BaseException {
         //类型&&彩种是否在可售时间内是否正确
         LotteryTerm currentTerm = lotteryService.getCurrentTerm(Integer.parseInt(type));
-        if (!currentTerm.getStatus().equals(String.valueOf(SaleStatus.SALE.getCode())) || currentTerm.getEndtime().compareTo(new Date()) < 0) {
-            throw new ParamException("当前期已停止");
+        if (!currentTerm.getStatus().equals(String.valueOf(SaleStatus.SALE.getCode()))
+                || currentTerm.getEndtime().compareTo(new Date()) < 0) {
+            throw new ParamException("当前期已停止|用户:"+userId+",类型:"+type+",内容:"+content);
         }
         //内容&&金额是否正确
         lotteryBuss.checkContent(type, content, num, amount);
@@ -130,7 +131,8 @@ public class OrderService {
     public boolean recharge(long userId, BigDecimal amount, String type) throws BaseException {
         RechargeType typeByCode = RechargeType.getTypeByCode(type);
         if (BigDecimal.ZERO.compareTo(amount) >= 0) {
-            throw new ParamException("充值金额不能小于等于0");
+            throw new ParamException("充值金额不能小于等于0|充值用户:"+userId+",充值金额:"+
+                    amount+",充值类型:"+type);
         }
         RechargeOrder order = createRechargeOrder(userId, amount, type);
         rechargeOrderDao.insertOrder(order);
