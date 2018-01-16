@@ -5,7 +5,6 @@ import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.vo.CommonResponose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
@@ -24,8 +23,7 @@ public class OrderController {
      * @param type 充值类型
      * */
     @RequestMapping("/recharge")
-    public CommonResponose<Boolean> recharge(@RequestParam long userId, @RequestParam BigDecimal amount,
-                                             @RequestParam String type) {
+    public CommonResponose<Boolean> recharge(long userId, BigDecimal amount, String type) {
         try {
             boolean success = orderService.recharge(userId, amount, type);
             return new CommonResponose<>(success);
@@ -50,9 +48,8 @@ public class OrderController {
      * type=5 福彩3D   0^1|0^1|0^1
      * */
     @RequestMapping("/buy")
-    public CommonResponose<Boolean> buyLottery(@RequestParam long userId, @RequestParam String type,
-                                               @RequestParam String content, @RequestParam BigDecimal amount,
-                                               @RequestParam int num) {
+    public CommonResponose<Boolean> buyLottery(long userId, String type, String content,
+                                               BigDecimal amount, int num) {
         try {
             boolean success = orderService.buyLottery(userId, type, content, amount, num);
             return new CommonResponose<>(success);

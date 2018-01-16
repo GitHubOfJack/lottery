@@ -39,7 +39,7 @@
     <maven.install.plugin.version>2.5.2</maven.install.plugin.version>
     <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
     <file.encoding>utf-8</file.encoding>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
   </properties>
 
   <dependencies>

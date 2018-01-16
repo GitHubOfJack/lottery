@@ -61,7 +61,7 @@ public class UserController {
      * @param mobile 手机号
      * */
     @RequestMapping("/mobileExist")
-    public CommonResponose<Boolean> mobileExist(@RequestParam String mobile) {
+    public CommonResponose<Boolean> mobileExist(String mobile) {
         try {
             if (StringUtils.isBlank(mobile)) {
                 throw new ParamException("手机号为空|mobile="+mobile);
@@ -78,7 +78,7 @@ public class UserController {
      * @param nickName 用户昵称
      * */
     @RequestMapping("/nickNameExist")
-    public CommonResponose<Boolean> nickNameExist(@RequestParam String nickName) {
+    public CommonResponose<Boolean> nickNameExist(String nickName) {
         try {
             if (StringUtils.isBlank(nickName)) {
                 throw new ParamException("用户昵称为空|nickName="+nickName);
@@ -99,9 +99,8 @@ public class UserController {
      * @param nickName 昵称
      * */
     @RequestMapping("/register")
-    public CommonResponose<Boolean> register(@RequestParam String mobile, @RequestParam String password,
-                                             @RequestParam String code, @RequestParam String smsCode,
-                                             @RequestParam String nickName, HttpServletRequest request) {
+    public CommonResponose<Boolean> register(String mobile, String password, String code,
+                                             String smsCode, String nickName, HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
             String sessionCode = (String) session.getAttribute("code");
@@ -123,8 +122,8 @@ public class UserController {
      * @param smsCode 手机验证码
      * */
     @RequestMapping("/login")
-    public CommonResponose<LoginResponse> login(@RequestParam String mobile, @RequestParam(required = false) String password,
-                                                @RequestParam(required = false) String smsCode, HttpServletRequest request) {
+    public CommonResponose<LoginResponse> login(String mobile,String password,
+                                                String smsCode, HttpServletRequest request) {
         try {
             if (StringUtils.isBlank(mobile)) {
                 throw new ParamException("手机号为空");
@@ -153,8 +152,7 @@ public class UserController {
      * @param newPwd 新密码
      * */
     @RequestMapping("/changePwd")
-    public CommonResponose<Boolean> changePwd(@RequestParam String mobile, @RequestParam String oldPwd,
-                                              @RequestParam String newPwd) {
+    public CommonResponose<Boolean> changePwd(String mobile, String oldPwd, String newPwd) {
         try {
             boolean success = userService.changePwd(mobile, oldPwd, newPwd);
             return new CommonResponose<>(success);
@@ -170,8 +168,7 @@ public class UserController {
      * @param code 手机验证码
      * */
     @RequestMapping("/resetPwd")
-    public CommonResponose<Boolean> resetPwd(@RequestParam String mobile, @RequestParam String pwd,
-                                             @RequestParam String code) {
+    public CommonResponose<Boolean> resetPwd(String mobile, String pwd, String code) {
         try {
             boolean success = userService.resetPwd(mobile, pwd, code);
             return new CommonResponose<>(success);
@@ -189,8 +186,7 @@ public class UserController {
      * @param pageSize 每页大小
      * */
     @RequestMapping("/queryOrder")
-    public CommonResponose<QueryOrderResp> queryOrder(@RequestParam long userId, @RequestParam(required = false) String type,
-                                                      @RequestParam int pageNo, @RequestParam int pageSize) {
+    public CommonResponose<QueryOrderResp> queryOrder(long userId, String type, int pageNo, int pageSize) {
         try {
             QueryOrderResp resp = orderService.queryOrder(userId, type, pageNo, pageSize);
             return new CommonResponose<>(resp);

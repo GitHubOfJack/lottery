@@ -3,7 +3,6 @@ package com.jack.lottery.controller;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.jack.lottery.entity.User;
 import com.jack.lottery.service.SMSService;
 import com.jack.lottery.service.UserService;
 import com.jack.lottery.utils.LotteryStringUtil;
@@ -15,7 +14,6 @@ import com.jack.lottery.vo.CommonResponose;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.ExecutionException;
@@ -49,8 +47,8 @@ public class SMSController {
      * @param checkMobile 是否需要验证手机号是否存在
      * */
     @RequestMapping("/send")
-    public CommonResponose<Boolean> sendMsg(@RequestParam String mobile, @RequestParam int type,
-                                            @RequestParam boolean checkMobile) {
+    public CommonResponose<Boolean> sendMsg(String mobile, int type,
+                                            boolean checkMobile) throws BaseException {
         try {
             validateSendMsg(mobile, type, checkMobile);
             return new CommonResponose(smsService.send(mobile, type));
