@@ -11,6 +11,7 @@ import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.DBException;
 import com.jack.lottery.utils.exception.ParamException;
 import com.jack.lottery.vo.LoginResponse;
+import com.jack.lottery.vo.QueryUserBasicInfoResp;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,8 @@ public class UserService {
     @Autowired
     private UserOptService userOptService;
 
+    @Autowired
+    private AccountDao accountDao;
     /**
      * 根据用户ID查询用户信息
      * */
@@ -166,5 +169,17 @@ public class UserService {
         user.setPassword(pwd);
         userDao.updateUserByUserId(user);
         return true;
+    }
+
+    public QueryUserBasicInfoResp getUserBasicInfo(long userId) throws BaseException {
+        User userInfo = getUserInfoById(userId);
+        Account account = accountDao.getAccountByUserId(userId);
+        QueryUserBasicInfoResp resp = new QueryUserBasicInfoResp();
+        resp.setBalance(account.getBalance());
+        resp.setImgUrl(userInfo.getImgUrl());
+        resp.setMobile(userInfo.getMobile());
+        resp.setNickName(userInfo.getNickName());
+        resp.setWinPrize(account.getWinPrize());
+        return resp;
     }
 }

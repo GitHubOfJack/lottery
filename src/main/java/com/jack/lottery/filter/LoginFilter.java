@@ -38,6 +38,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Access-Control-Allow-Origin","*");
+        response.setHeader("Access-Control-Allow-Credentials","true");
         if (PropertyUtil.contains(request.getRequestURI())) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;

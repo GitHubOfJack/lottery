@@ -5,10 +5,12 @@ import com.jack.lottery.service.UserService;
 import com.jack.lottery.utils.LotteryStringUtil;
 import com.jack.lottery.utils.VerificationCode;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
+import com.jack.lottery.utils.exception.ExceptionHandler;
 import com.jack.lottery.utils.exception.ParamException;
 import com.jack.lottery.vo.CommonResponose;
 import com.jack.lottery.vo.LoginResponse;
 import com.jack.lottery.vo.QueryOrderResp;
+import com.jack.lottery.vo.QueryUserBasicInfoResp;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -223,6 +225,22 @@ public class UserController {
         try {
             QueryOrderResp resp = orderService.queryOrder(userId, type, pageNo, pageSize);
             return new CommonResponose<>(resp);
+        } catch (Exception e) {
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    /**
+     * 用户基本信息查询
+     * @param userId 用户编号
+     * */
+    @RequestMapping("/queryUserBasicInfo")
+    public CommonResponose<QueryUserBasicInfoResp> queryUserBasicInfo(long userId) {
+        try {
+            if (0 >= userId) {
+                throw new ParamException("用户编号不存在");
+            }
+            return new CommonResponose<>(userService.getUserBasicInfo(userId));
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
         }
