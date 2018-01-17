@@ -8,6 +8,8 @@ import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.vo.CommonResponose;
 import com.jack.lottery.vo.ResponseCode;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.WebApplicationContext;
@@ -24,6 +26,8 @@ import java.util.List;
 
 public class LoginFilter implements Filter {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private UserMapper userMapper;
 
     @Override
@@ -38,13 +42,13 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Access-Control-Allow-Origin","*");
-        response.setHeader("Access-Control-Allow-Credentials","true");
-        if (PropertyUtil.contains(request.getRequestURI())) {
+        filterChain.doFilter(servletRequest, servletResponse);
+        /*if (PropertyUtil.contains(request.getRequestURI())) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
         String userId = request.getParameter("userId");
-        if (StringUtils.isBlank(userId) || StringUtils.isNumeric(userId) || !checkUser(Long.parseLong(userId))) {
+        if (StringUtils.isBlank(userId) || !StringUtils.isNumeric(userId) || !checkUser(Long.parseLong(userId))) {
             returnNotLogin(response);
             return;
         }
@@ -66,7 +70,7 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             returnNotLogin(response);
-        }
+        }*/
     }
 
     @Override
