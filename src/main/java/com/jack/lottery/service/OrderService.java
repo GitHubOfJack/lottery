@@ -39,7 +39,8 @@ public class OrderService {
     private RechargeOrderDao rechargeOrderDao;
 
     public boolean buyLottery(long userId, String type, String content,
-                              BigDecimal amount, int num) throws BaseException {
+                              BigDecimal amount, int num, int muti,
+                              int addition, boolean stopAfterWin) throws BaseException {
         //类型&&彩种是否在可售时间内是否正确
         LotteryTerm currentTerm = lotteryService.getCurrentTerm(Integer.parseInt(type));
         if (!currentTerm.getStatus().equals(String.valueOf(SaleStatus.SALE.getCode()))
@@ -47,14 +48,15 @@ public class OrderService {
             throw new ParamException("当前期已停止|用户:"+userId+",类型:"+type+",内容:"+content);
         }
         //内容&&金额是否正确
-        lotteryBuss.checkContent(type, content, num, amount);
+        lotteryBuss.checkContent(type, content, num, amount, muti);
         //验证用户余额
         Account account = accountDao.getAccountByUserId(userId);
         if (account.getAvailableBalance().compareTo(amount) < 0) {
             throw new ParamException("用户余额不足");
         }
         //生成订单
-        LotteryOrder order = createLotteryOrder(userId, type, content, amount, num, currentTerm.getTerm());
+        LotteryOrder order = createLotteryOrder(userId, type, content, amount,
+                num, currentTerm.getTerm(), muti, addition, stopAfterWin);
         account.setFreezeBalance(account.getFreezeBalance().add(amount));
         account.setAvailableBalance(account.getAvailableBalance().subtract(amount));
         AccountDetail accountDetail = createLotteryAccountDetail(userId, amount, account.getId());
@@ -62,7 +64,9 @@ public class OrderService {
         return true;
     }
 
-    private LotteryOrder createLotteryOrder(long uerId, String type, String content, BigDecimal amount, int num, String term) {
+    private LotteryOrder createLotteryOrder(long uerId, String type, String content,
+                                            BigDecimal amount, int num, String term,
+                                            int muti, int addition, boolean stopAfterWin) {
         Date now = new Date();
         LotteryOrder order = new LotteryOrder();
         order.setAmount(amount);
@@ -74,6 +78,13 @@ public class OrderService {
         order.setStatus(LotteryOrderStatus.SUBMIT.getCode());
         order.setUpdateTime(now);
         order.setUserid(uerId);
+        if (0 >= muti) {
+            order.setMutiply(muti);
+        }
+        if (0 >= addition) {
+            order.setAddition(addition);
+            order.setStopAfterWin(stopAfterWin ? "0" : "1");
+        }
         return order;
     }
 

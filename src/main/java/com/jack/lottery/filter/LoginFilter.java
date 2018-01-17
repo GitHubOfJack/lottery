@@ -3,9 +3,13 @@ package com.jack.lottery.filter;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.lottery.entity.User;
 import com.jack.lottery.mapper.UserMapper;
+import com.jack.lottery.utils.PropertyUtil;
+import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.vo.CommonResponose;
 import com.jack.lottery.vo.ResponseCode;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -15,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class LoginFilter implements Filter {
 
@@ -32,8 +38,11 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Access-Control-Allow-Origin","*");
-        filterChain.doFilter(servletRequest, servletResponse);
-        /*String userId = request.getParameter("userId");
+        if (PropertyUtil.contains(request.getRequestURI())) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+        String userId = request.getParameter("userId");
         if (StringUtils.isBlank(userId) || StringUtils.isNumeric(userId) || !checkUser(Long.parseLong(userId))) {
             returnNotLogin(response);
             return;
@@ -56,7 +65,7 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             returnNotLogin(response);
-        }*/
+        }
     }
 
     @Override
@@ -64,12 +73,14 @@ public class LoginFilter implements Filter {
 
     }
 
-    private void returnNotLogin(HttpServletResponse response) throws IOException {
+    private void returnNotLogin(HttpServletResponse httpServletResponse) throws IOException {
         CommonResponose resp = new CommonResponose(ResponseCode.NOT_LOGIN, null);
         String json = JSONObject.toJSONString(resp);
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        response.getWriter().append(json);
+        httpServletResponse.setStatus(HttpStatus.OK.value()); //设置状态码
+        httpServletResponse.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE); //设置ContentType
+        httpServletResponse.setCharacterEncoding("UTF-8"); //避免乱码
+        httpServletResponse.setHeader("Cache-Control", "no-cache, must-revalidate");
+        httpServletResponse.getWriter().write(JSONObject.toJSONString(resp));
     }
 
     private boolean checkUser(long userId) {

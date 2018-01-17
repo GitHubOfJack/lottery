@@ -63,9 +63,7 @@ public class SMSService {
      * 发送验证码短信
      * */
     private boolean sendMsg(String mobile, String verificationCode) {
-        System.out.println(smsContent);
         String content = String.format(smsContent, verificationCode);
-        System.out.println(content);
         String smsParam = createSMSParam(mobile, content, 0);
         String response = URLConnectionUtil.doGet(url, smsParam);
         if (checkResponse(response)) {

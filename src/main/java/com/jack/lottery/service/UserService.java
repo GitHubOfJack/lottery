@@ -143,8 +143,8 @@ public class UserService {
     /**
      * 修改登录密码
      * */
-    public boolean changePwd(String mobile, String oldPwd, String newPwd) throws BaseException {
-        User user = getUserInfoByMobile(mobile);
+    public boolean changePwd(long userId, String oldPwd, String newPwd) throws BaseException {
+        User user = getUserInfoById(userId);
         String password = user.getPassword();
         oldPwd = MD5Util.encode(oldPwd);
         if (!password.equals(oldPwd)) {
@@ -161,7 +161,7 @@ public class UserService {
      * */
     public boolean resetPwd(String mobile, String pwd, String code) throws BaseException {
         User user = getUserInfoByMobile(mobile);
-        checkSmsCode(mobile, code);
+        checkSmsCode(user.getMobile(), code);
         pwd = MD5Util.encode(pwd);
         user.setPassword(pwd);
         userDao.updateUserByUserId(user);

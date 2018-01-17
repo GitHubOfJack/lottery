@@ -20,7 +20,7 @@ public class LotteryBuss {
      * type=5 福彩3D   0^1|0^1|0^1
      *
      */
-    public void checkContent(String type, String content, int num, BigDecimal amt) throws BaseException {
+    public void checkContent(String type, String content, int num, BigDecimal amt, int muti) throws BaseException {
         LotteryType lotteryType = LotteryType.getTypeByCode(type);
         if (StringUtils.isBlank(content)) {
             throw new ParamException("投注格式不正确");
@@ -31,7 +31,11 @@ public class LotteryBuss {
         if (BigDecimal.valueOf(2).compareTo(amt) > 0) {
             throw new ParamException("金额不正确");
         }
-        if (BigDecimal.valueOf(2).multiply(BigDecimal.valueOf(num)).compareTo(amt) != 0) {
+        if (0 >= muti) {
+            muti = 1;
+        }
+        if (BigDecimal.valueOf(2).multiply(BigDecimal.valueOf(num))
+                .multiply(BigDecimal.valueOf(muti)).compareTo(amt) != 0) {
             throw new ParamException("总注数和金额不匹配");
         }
         switch (lotteryType) {

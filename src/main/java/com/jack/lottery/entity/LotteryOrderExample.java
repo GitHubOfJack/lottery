@@ -576,6 +576,196 @@ public class LotteryOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andMutiplyIsNull() {
+            addCriterion("mutiply is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyIsNotNull() {
+            addCriterion("mutiply is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyEqualTo(Integer value) {
+            addCriterion("mutiply =", value, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyNotEqualTo(Integer value) {
+            addCriterion("mutiply <>", value, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyGreaterThan(Integer value) {
+            addCriterion("mutiply >", value, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyGreaterThanOrEqualTo(Integer value) {
+            addCriterion("mutiply >=", value, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyLessThan(Integer value) {
+            addCriterion("mutiply <", value, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyLessThanOrEqualTo(Integer value) {
+            addCriterion("mutiply <=", value, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyIn(List<Integer> values) {
+            addCriterion("mutiply in", values, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyNotIn(List<Integer> values) {
+            addCriterion("mutiply not in", values, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyBetween(Integer value1, Integer value2) {
+            addCriterion("mutiply between", value1, value2, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andMutiplyNotBetween(Integer value1, Integer value2) {
+            addCriterion("mutiply not between", value1, value2, "mutiply");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionIsNull() {
+            addCriterion("addition is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionIsNotNull() {
+            addCriterion("addition is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionEqualTo(Integer value) {
+            addCriterion("addition =", value, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionNotEqualTo(Integer value) {
+            addCriterion("addition <>", value, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionGreaterThan(Integer value) {
+            addCriterion("addition >", value, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionGreaterThanOrEqualTo(Integer value) {
+            addCriterion("addition >=", value, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionLessThan(Integer value) {
+            addCriterion("addition <", value, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionLessThanOrEqualTo(Integer value) {
+            addCriterion("addition <=", value, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionIn(List<Integer> values) {
+            addCriterion("addition in", values, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionNotIn(List<Integer> values) {
+            addCriterion("addition not in", values, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionBetween(Integer value1, Integer value2) {
+            addCriterion("addition between", value1, value2, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdditionNotBetween(Integer value1, Integer value2) {
+            addCriterion("addition not between", value1, value2, "addition");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinIsNull() {
+            addCriterion("stop_after_win is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinIsNotNull() {
+            addCriterion("stop_after_win is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinEqualTo(String value) {
+            addCriterion("stop_after_win =", value, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinNotEqualTo(String value) {
+            addCriterion("stop_after_win <>", value, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinGreaterThan(String value) {
+            addCriterion("stop_after_win >", value, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinGreaterThanOrEqualTo(String value) {
+            addCriterion("stop_after_win >=", value, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinLessThan(String value) {
+            addCriterion("stop_after_win <", value, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinLessThanOrEqualTo(String value) {
+            addCriterion("stop_after_win <=", value, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinLike(String value) {
+            addCriterion("stop_after_win like", value, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinNotLike(String value) {
+            addCriterion("stop_after_win not like", value, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinIn(List<String> values) {
+            addCriterion("stop_after_win in", values, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinNotIn(List<String> values) {
+            addCriterion("stop_after_win not in", values, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinBetween(String value1, String value2) {
+            addCriterion("stop_after_win between", value1, value2, "stopAfterWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andStopAfterWinNotBetween(String value1, String value2) {
+            addCriterion("stop_after_win not between", value1, value2, "stopAfterWin");
+            return (Criteria) this;
+        }
+
         public Criteria andLotteryTypeIsNull() {
             addCriterion("lottery_type is null");
             return (Criteria) this;

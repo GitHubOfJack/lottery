@@ -2,6 +2,7 @@ package com.jack.lottery.controller;
 
 import com.jack.lottery.service.OrderService;
 import com.jack.lottery.service.UserService;
+import com.jack.lottery.utils.LotteryStringUtil;
 import com.jack.lottery.utils.VerificationCode;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.utils.exception.ParamException;
@@ -34,29 +35,6 @@ public class UserController {
     private OrderService orderService;
 
     /**
-     * 获取验证码接口
-     * */
-    @RequestMapping("/verificationCode")
-    public void getVerificationCode(HttpServletRequest request, HttpServletResponse response) {
-        // 设置响应的类型格式为图片格式
-        response.setContentType("image/jpeg");
-        //禁止图像缓存。
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
-
-        HttpSession session = request.getSession();
-
-        VerificationCode vCode = new VerificationCode(120,40,4,100);
-        session.setAttribute("code", vCode.getCode());
-        try {
-            vCode.write(response.getOutputStream());
-        } catch (IOException e) {
-            logger.error("生成验证码图片错误", e);
-        }
-    }
-
-    /**
      * 根据手机号查询用户是否存在
      * @param mobile 手机号
      * */
@@ -68,6 +46,7 @@ public class UserController {
             }
             return new CommonResponose<>(userService.mobileExist(mobile));
         } catch (Exception e) {
+            logger.error("调用手机号查询用户是否存在报错,请求参数:{}", mobile, e);
             return Exception2ResponseUtils.getResponse(e);
         }
 
@@ -85,6 +64,7 @@ public class UserController {
             }
             return new CommonResponose<>(userService.nickNameExist(nickName));
         } catch (Exception e) {
+            logger.error("调用昵称查询用户是否存在报错,请求参数:{}", nickName, e);
             return Exception2ResponseUtils.getResponse(e);
         }
 
@@ -94,24 +74,38 @@ public class UserController {
      * 注册功能
      * @param mobile 手机号
      * @param password 密码
-     * @param code  验证码
      * @param smsCode  短信验证码
      * @param nickName 昵称
      * */
     @RequestMapping("/register")
-    public CommonResponose<Boolean> register(String mobile, String password, String code,
-                                             String smsCode, String nickName, HttpServletRequest request) {
+    public CommonResponose<Boolean> register(String mobile, String password,
+                                             String smsCode, String nickName) {
         try {
-            HttpSession session = request.getSession();
-            String sessionCode = (String) session.getAttribute("code");
-            if (StringUtils.isBlank(sessionCode) || StringUtils.isBlank(code) ||
-                    !sessionCode.toLowerCase().equals(code.toLowerCase())) {
-                throw new ParamException("验证码错误");
-            }
+            checkRegisterParam(mobile, password, smsCode, nickName);
             userService.registerUser(mobile, password, smsCode, nickName);
             return  new CommonResponose<>(true);
         } catch (Exception e) {
+            logger.error("调用注册接口报错,请求参数:{},{},{},{}", mobile, password, smsCode, nickName, e);
             return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    private void checkRegisterParam(String mobile, String password,
+                                    String smsCode, String nickName) throws ParamException {
+        if (StringUtils.isBlank(mobile)) {
+            throw new ParamException("手机号为空");
+        }
+        if (StringUtils.isBlank(password)) {
+            throw new ParamException("密码为空");
+        }
+        if (StringUtils.isBlank(smsCode)) {
+            throw new ParamException("手机验证码为空");
+        }
+        if (StringUtils.isBlank(nickName)) {
+            throw new ParamException("用户昵称为空");
+        }
+        if (!LotteryStringUtil.isMobile(mobile)) {
+            throw new ParamException("手机号格式不正确");
         }
     }
 
@@ -125,9 +119,7 @@ public class UserController {
     public CommonResponose<LoginResponse> login(String mobile,String password,
                                                 String smsCode, HttpServletRequest request) {
         try {
-            if (StringUtils.isBlank(mobile)) {
-                throw new ParamException("手机号为空");
-            }
+            checkLoginParam(mobile, password, smsCode);
             HttpSession session = request.getSession();
             LoginResponse resp = null;
             if (StringUtils.isNoneBlank(password)) {
@@ -145,35 +137,76 @@ public class UserController {
         }
     }
 
+    private void checkLoginParam(String mobile, String password, String smsCode) throws ParamException {
+        if (StringUtils.isBlank(mobile)) {
+            throw new ParamException("手机号为空");
+        }
+        if (StringUtils.isBlank(password) && StringUtils.isBlank(smsCode)) {
+            throw new ParamException("密码和验证码不能同时为空");
+        }
+        if (!LotteryStringUtil.isMobile(mobile)) {
+            throw new ParamException("手机号格式不正确");
+        }
+    }
+
     /**
      * 修改密码
-     * @param mobile 手机号
+     * @param userId 用户编号
      * @param oldPwd 旧密码
      * @param newPwd 新密码
      * */
     @RequestMapping("/changePwd")
-    public CommonResponose<Boolean> changePwd(String mobile, String oldPwd, String newPwd) {
+    public CommonResponose<Boolean> changePwd(long userId, String oldPwd, String newPwd) {
         try {
-            boolean success = userService.changePwd(mobile, oldPwd, newPwd);
+            checkChangePwdParam(userId, oldPwd, newPwd);
+            boolean success = userService.changePwd(userId, oldPwd, newPwd);
             return new CommonResponose<>(success);
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
         }
     }
 
+    private void checkChangePwdParam(long userId, String oldPwd, String newPwd) throws ParamException {
+        if (0 >= userId) {
+            throw new ParamException("用户编号不存在");
+        }
+        if (StringUtils.isBlank(oldPwd)) {
+            throw new ParamException("旧密码为空");
+        }
+        if (StringUtils.isBlank(newPwd)) {
+            throw new ParamException("新密码为空");
+        }
+    }
+
     /**
      * 重置密码
-     * @param mobile 手机号
+     * @param mobile 用户手机号
      * @param pwd 新密码
      * @param code 手机验证码
      * */
     @RequestMapping("/resetPwd")
     public CommonResponose<Boolean> resetPwd(String mobile, String pwd, String code) {
         try {
+            checkResetPwdParam(mobile, pwd, code);
             boolean success = userService.resetPwd(mobile, pwd, code);
             return new CommonResponose<>(success);
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    private void checkResetPwdParam(String mobile, String pwd, String code) throws ParamException {
+        if (StringUtils.isBlank(mobile)) {
+            throw new ParamException("手机号不存在");
+        }
+        if (StringUtils.isBlank(pwd)) {
+            throw new ParamException("新密码不存在");
+        }
+        if (StringUtils.isBlank(code)) {
+            throw new ParamException("手机号验证码不存在");
+        }
+        if (!LotteryStringUtil.isMobile(mobile)) {
+            throw new ParamException("手机号格式不正确");
         }
     }
 
