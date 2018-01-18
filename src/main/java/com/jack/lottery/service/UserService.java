@@ -5,8 +5,6 @@ import com.jack.lottery.dao.CardInfoDao;
 import com.jack.lottery.dao.SMSCodeDao;
 import com.jack.lottery.dao.UserDao;
 import com.jack.lottery.entity.*;
-import com.jack.lottery.mapper.SMSCodeMapper;
-import com.jack.lottery.mapper.UserMapper;
 import com.jack.lottery.utils.MD5Util;
 import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.DBException;
@@ -17,12 +15,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -208,5 +204,37 @@ public class UserService {
         winPercent *= 100;
         resp.setWinPercent(winPercent+"%");
         return resp;
+    }
+
+    public boolean identify(long userId, String realName, String idType, String idNo) {
+        User user = new User();
+        user.setUpdateTime(new Date());
+        user.setIdNo(idNo);
+        user.setIdType(idType);
+        user.setRealName(realName);
+        user.setId(userId);
+        userDao.updateUserByUserId(user);
+        return true;
+    }
+
+    public boolean bindCard(long userId, String cardNo, String branch,
+                            String province, String city, String bankName) {
+        CardInfo cardInfo = createCardInfo(cardNo, branch, province, city, bankName);
+        User user = new User();
+        user.setId(userId);
+        long id = null == cardInfoDao.getCardInfoByCardNo(cardNo) ? -1 : cardInfoDao.getCardInfoByCardNo(cardNo).getId();
+        userOptService.doBindCard(user, cardInfo, id);
+        return true;
+    }
+
+    private CardInfo createCardInfo(String cardNo, String branch,
+                           String province, String city, String bankName) {
+        CardInfo info = new CardInfo();
+        info.setBankBranch(branch);
+        info.setBankName(bankName);
+        info.setCardNo(cardNo);
+        info.setCity(city);
+        info.setProvince(province);
+        return info;
     }
 }

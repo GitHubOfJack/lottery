@@ -1,5 +1,6 @@
 package com.jack.lottery.controller;
 
+import com.jack.lottery.enums.IdType;
 import com.jack.lottery.service.OrderService;
 import com.jack.lottery.service.UserService;
 import com.jack.lottery.utils.LotteryStringUtil;
@@ -257,6 +258,77 @@ public class UserController {
         } catch (Exception e) {
             logger.error("查询用户基本信息接口报错,入参:{}",userId, e);
             return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    /**
+     * 实名接口
+     * */
+    @RequestMapping("identify")
+    public CommonResponose<Boolean> identify(long userId, String realName, String idType, String idNo) {
+        try {
+            checkIdentifyParam(userId, realName, idType, idNo);
+            return new CommonResponose<>(userService.identify(userId, realName, idType, idNo));
+        } catch (Exception e) {
+            logger.error("实名接口报错,入参:{},{},{},{}",userId, realName, idType, idNo, e);
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    private void checkIdentifyParam(long userId, String realName, String idType,
+                                    String idNo) throws ParamException {
+        if (0 >= userId) {
+            throw new ParamException("用户编号不存在");
+        }
+        if (StringUtils.isBlank(realName)) {
+            throw new ParamException("真实姓名为空");
+        }
+        if (StringUtils.isBlank(idType)) {
+            throw new ParamException("证件类型为空");
+        }
+        IdType.getTypeByCode(idType);
+        if (StringUtils.isBlank(idNo)) {
+            throw new ParamException("证件号码为空");
+        }
+        if (LotteryStringUtil.validateIdNo(idNo)) {
+            throw new ParamException("证件号码格式错误");
+        }
+    }
+
+    /**
+     * 绑卡接口
+     * */
+    @RequestMapping("bindCard")
+    public CommonResponose<Boolean> bindCard(long userId, String cardNo, String branch,
+                                             String province, String city, String bankName) {
+        try {
+            checkBindCardParam(userId, cardNo, branch, province, city, bankName);
+            return new CommonResponose<>(userService.bindCard(userId, cardNo, branch, province, city, bankName));
+        } catch (Exception e) {
+            logger.error("实名接口报错,入参:{},{},{},{}",userId, cardNo, branch, e);
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    private void checkBindCardParam(long userId, String cardNo, String branch,
+                                    String province, String city, String bankName) throws ParamException {
+        if (0 >= userId) {
+            throw new ParamException("用户编号不存在");
+        }
+        if (StringUtils.isBlank(cardNo)) {
+            throw new ParamException("银行卡号不存在");
+        }
+        if (StringUtils.isBlank(branch)) {
+            throw new ParamException("银行支行不存在");
+        }
+        if (StringUtils.isBlank(province)) {
+            throw new ParamException("省份不能为空");
+        }
+        if (StringUtils.isBlank(city)) {
+            throw new ParamException("市不能为空");
+        }
+        if (StringUtils.isBlank(bankName)) {
+            throw new ParamException("银行不能为空");
         }
     }
 }
