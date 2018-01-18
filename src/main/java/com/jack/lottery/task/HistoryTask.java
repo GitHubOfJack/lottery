@@ -281,11 +281,89 @@ public class HistoryTask {
         connection.close();
     }
 
+    public static void plw() throws Exception{
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/lottery", "root", "root");
+
+
+        String insert = "insert into lottery_term(type, term, startTime, endTime, isCurrent, status, result) values (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement statement = connection.prepareStatement(insert);
+
+        String url = "http://kaijiang.500.com/plw.shtml";
+        Document document = Jsoup.connect(url).get();
+        Elements iSelectList = document.getElementsByClass("iSelectList");
+        Elements as = iSelectList.select("a");
+        int m = 0;
+        for (Element e : as) {
+            String href = e.attr("href");
+            Document document1 = null;
+            try {
+                document1 = Jsoup.connect(href).get();
+            } catch (Exception e1) {
+                continue;
+            }
+            Elements cfont2 = document1.getElementsByClass("cfont2");
+            String termNo = "20"+cfont2.text();
+            System.out.println(termNo);
+            if (termNo.compareTo("2011022") >= 0) {
+                continue;
+            }
+            Elements span_right = document1.getElementsByClass("span_right");
+            String endTime = span_right.text();
+            String date = endTime;
+            if (endTime.contains("年")) {
+                String year = endTime.split("兑奖截止日期")[0].split("年")[0].split("：")[1].trim();
+                String month = endTime.split("兑奖截止日期")[0].split("年")[1].split("月")[0].trim();
+                String day = endTime.split("兑奖截止日期")[0].split("年")[1].split("月")[1].split("日")[0].trim();
+                date = year + "-"+ month + "-"+day;
+            } else {
+                date = date.split("日期：")[1].split("兑奖")[0].trim();
+            }
+            System.out.println(date);
+            Elements iSelectList1 = document1.getElementsByClass("ball_box01");
+            Elements lis = iSelectList1.select("li");
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            for (Element li : lis) {
+                sb.append(li.text());
+                if (i == 4) {
+
+                } else {
+                    sb.append("^");
+                }
+                i++;
+            }
+            String result = sb.toString();
+            System.out.println(result);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = sdf.parse(date);
+            java.sql.Date sd = new java.sql.Date(d.getTime());
+            statement.setString(1, "4");
+            statement.setString(2, termNo);
+            statement.setDate(3, sd);
+            statement.setDate(4, sd);
+            statement.setByte(5, (byte)1);
+            statement.setString(6, "2");
+            statement.setString(7, result);
+            statement.addBatch();
+            if (m >0 && m%100 == 0) {
+                statement.executeBatch();
+                statement.clearBatch();
+            }
+            m++;
+        }
+        statement.executeBatch();
+        statement.clearBatch();
+        statement.close();
+        connection.close();
+    }
+
     public static void main(String[] args) throws Exception {
         //ssq();
         //dlt();
+        //pls();
+        plw();
         //sd();
-        pls();
     }
 
 }
