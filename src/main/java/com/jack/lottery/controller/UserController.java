@@ -100,6 +100,9 @@ public class UserController {
         if (StringUtils.isBlank(password)) {
             throw new ParamException("密码为空");
         }
+        if (!LotteryStringUtil.validatePwd(password)) {
+            throw new ParamException("密码格式不正确");
+        }
         if (StringUtils.isBlank(smsCode)) {
             throw new ParamException("手机验证码为空");
         }
@@ -180,6 +183,9 @@ public class UserController {
         if (StringUtils.isBlank(newPwd)) {
             throw new ParamException("新密码为空");
         }
+        if (!LotteryStringUtil.validatePwd(newPwd)) {
+            throw new ParamException("新密码格式不正确");
+        }
     }
 
     /**
@@ -206,6 +212,9 @@ public class UserController {
         }
         if (StringUtils.isBlank(pwd)) {
             throw new ParamException("新密码不存在");
+        }
+        if (!LotteryStringUtil.validatePwd(pwd)) {
+            throw new ParamException("新密码格式不正确");
         }
         if (StringUtils.isBlank(code)) {
             throw new ParamException("手机号验证码不存在");

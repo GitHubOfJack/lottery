@@ -13,11 +13,11 @@ import java.math.BigDecimal;
 public class LotteryBuss {
     /**
      * 验证投注内容
-     * type=1 双色球   01^02^03^04^05^06^07|01^02
-     * type=2 大乐透   01^02^03^04^05^06^07|01^02
-     * type=3 排列三   0^1|0^1|0^1
-     * type=4 排列五   0^1|0^1|0^1|0^1|0^1
-     * type=5 福彩3D   0^1|0^1|0^1
+     * type=1 双色球 fs-06,07,11,14,30,31|10（1注） fs-01,10,12,17,23,32|05,11（2注） fs-02,10,12,14,22,25,27|15（7注）
+     * type=2 大乐透   fs-12,17,20,21,29|01,05（普通投注1注） fs-19,23,28,29,33|02,05,09（普通投注3注） fs-04,12,17,22,30,34|01,12（普通投注6注）
+     * type=3 排列三   fs-3,8,3（直选1注） zs_bh-8,4（组三包号2注） zl_bh-6,2,8（组六包号1注） zl_bh-4,5,7^zs_bh-4,2^fs-9,5,1（4注）
+     * type=4 排列五   fs-9,8,2,5,0（单式投注）
+     * type=5 福彩3D   fs-3,8,3（直选1注） zs_bh-8,4（组三包号2注） zl_bh-6,2,8（组六包号1注） zl_bh-4,5,7^zs_bh-4,2^fs-9,5,1（4注）
      *
      */
     public void checkContent(String type, String content, int num, BigDecimal amt, int muti) throws BaseException {

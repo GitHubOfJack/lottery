@@ -38,6 +38,7 @@ public class LotteryTermDao {
 
     public List<LotteryTerm> getHistoryTerms(int type, int pageNo, int pageSize) {
         LotteryTermExample example = new LotteryTermExample();
+        example.setOrderByClause(" term desc ");
         example.createCriteria().andTypeEqualTo(String.valueOf(type))
                 .andIscurrentEqualTo(Byte.valueOf("1"));
         PageHelper.startPage(pageNo, pageSize);

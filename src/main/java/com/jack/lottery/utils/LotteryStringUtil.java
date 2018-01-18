@@ -19,4 +19,14 @@ public class LotteryStringUtil {
         }
     }
 
+    public static boolean validatePwd(String pwd) {
+        String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
+        if (pwd.length() <6 || pwd.length() > 18) {
+            return false;
+        }
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(pwd);
+        return m.matches();
+    }
+
 }
