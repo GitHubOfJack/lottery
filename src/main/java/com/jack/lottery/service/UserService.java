@@ -1,6 +1,7 @@
 package com.jack.lottery.service;
 
 import com.jack.lottery.dao.AccountDao;
+import com.jack.lottery.dao.CardInfoDao;
 import com.jack.lottery.dao.SMSCodeDao;
 import com.jack.lottery.dao.UserDao;
 import com.jack.lottery.entity.*;
@@ -39,6 +40,10 @@ public class UserService {
 
     @Autowired
     private AccountDao accountDao;
+
+    @Autowired
+    private CardInfoDao cardInfoDao;
+
     /**
      * 根据用户ID查询用户信息
      * */
@@ -171,6 +176,9 @@ public class UserService {
         return true;
     }
 
+    /**
+     * 查询用户基本信息
+     * */
     public QueryUserBasicInfoResp getUserBasicInfo(long userId) throws BaseException {
         User userInfo = getUserInfoById(userId);
         Account account = accountDao.getAccountByUserId(userId);
@@ -179,7 +187,26 @@ public class UserService {
         resp.setImgUrl(userInfo.getImgUrl());
         resp.setMobile(userInfo.getMobile());
         resp.setNickName(userInfo.getNickName());
-        resp.setWinPrize(account.getWinPrize());
+        BigDecimal winPrize  = null == account.getWinPrize() ? BigDecimal.ZERO : account.getWinPrize();
+        resp.setWinPrize(winPrize);
+        resp.setMobile(userInfo.getMobile());
+        resp.setIdNo(userInfo.getIdNo());
+        resp.setRealName(userInfo.getRealName());
+        Long cardId = userInfo.getCardId();
+        if (null == cardId || 0 >= cardId) {
+            resp.setBind(false);
+            resp.setBranch(null);
+            resp.setCard(null);
+        } else {
+            CardInfo cardInfo = cardInfoDao.getCardInfoById(cardId);
+            resp.setBind(true);
+            resp.setBranch(cardInfo.getBankBranch());
+            resp.setCard(cardInfo.getCardNo());
+        }
+        resp.setCetification(StringUtils.isBlank(userInfo.getRealName()) ? false : true);
+        Double winPercent = null == userInfo.getWinPercent() ? 0.0 : userInfo.getWinPercent();
+        winPercent *= 100;
+        resp.setWinPercent(winPercent+"%");
         return resp;
     }
 }

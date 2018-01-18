@@ -1,5 +1,6 @@
 package com.jack.lottery.dao;
 
+import com.github.pagehelper.PageHelper;
 import com.jack.lottery.entity.LotteryTerm;
 import com.jack.lottery.entity.LotteryTermExample;
 import com.jack.lottery.enums.LotteryType;
@@ -26,5 +27,20 @@ public class LotteryTermDao {
             throw new ParamException("当前期不存在|type="+type);
         }
         return lotteryTerms.get(0);
+    }
+
+    public int countHistoryTermNum(int type) {
+        LotteryTermExample example = new LotteryTermExample();
+        example.createCriteria().andTypeEqualTo(String.valueOf(type))
+                .andIscurrentEqualTo(Byte.valueOf("1"));
+        return lotteryTermMapper.countByExample(example);
+    }
+
+    public List<LotteryTerm> getHistoryTerms(int type, int pageNo, int pageSize) {
+        LotteryTermExample example = new LotteryTermExample();
+        example.createCriteria().andTypeEqualTo(String.valueOf(type))
+                .andIscurrentEqualTo(Byte.valueOf("1"));
+        PageHelper.startPage(pageNo, pageSize);
+        return lotteryTermMapper.selectByExample(example);
     }
 }

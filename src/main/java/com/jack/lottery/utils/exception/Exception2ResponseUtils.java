@@ -2,6 +2,7 @@ package com.jack.lottery.utils.exception;
 
 import com.jack.lottery.vo.CommonResponose;
 import com.jack.lottery.vo.ResponseCode;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 
 import java.text.ParseException;
@@ -9,7 +10,10 @@ import java.text.ParseException;
 public class Exception2ResponseUtils {
     //错误统一输出格式    错误内容(直接页面输出内容)|错误详情
     public static CommonResponose getResponse(Exception e) {
-        String appandMsg = e.getMessage().split("\\|")[0];
+        String appandMsg = "";
+        if (!StringUtils.isBlank(e.getMessage())) {
+            appandMsg = e.getMessage().split("\\|")[0];
+        }
         CommonResponose resp = null;
         if (e instanceof SystermException) {
             resp = new CommonResponose(ResponseCode.SYSTEM_ERROR, null, appandMsg);

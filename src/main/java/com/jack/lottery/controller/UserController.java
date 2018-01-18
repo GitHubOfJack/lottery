@@ -135,6 +135,7 @@ public class UserController {
             }
             return new CommonResponose<>(resp);
         } catch (Exception e){
+            logger.error("调用登录接口报错,入参:{},{},{}", mobile, password, smsCode, e);
             return Exception2ResponseUtils.getResponse(e);
         }
     }
@@ -164,6 +165,7 @@ public class UserController {
             boolean success = userService.changePwd(userId, oldPwd, newPwd);
             return new CommonResponose<>(success);
         } catch (Exception e) {
+            logger.error("修改密码接口报错,入参:{},{},{}", userId, oldPwd, newPwd, e);
             return Exception2ResponseUtils.getResponse(e);
         }
     }
@@ -193,6 +195,7 @@ public class UserController {
             boolean success = userService.resetPwd(mobile, pwd, code);
             return new CommonResponose<>(success);
         } catch (Exception e) {
+            logger.error("重置密码接口报错,入参:{},{},{}", mobile, pwd, code, e);
             return Exception2ResponseUtils.getResponse(e);
         }
     }
@@ -226,6 +229,7 @@ public class UserController {
             QueryOrderResp resp = orderService.queryOrder(userId, type, pageNo, pageSize);
             return new CommonResponose<>(resp);
         } catch (Exception e) {
+            logger.error("查询用户订单接口报错,入参:{},{}", userId, type, e);
             return Exception2ResponseUtils.getResponse(e);
         }
     }
@@ -242,6 +246,7 @@ public class UserController {
             }
             return new CommonResponose<>(userService.getUserBasicInfo(userId));
         } catch (Exception e) {
+            logger.error("查询用户基本信息接口报错,入参:{}",userId, e);
             return Exception2ResponseUtils.getResponse(e);
         }
     }

@@ -76,5 +76,10 @@
             <generatedKey column="id" sqlStatement="mysql"
                           identity="true" />
         </table>
+
+        <table tableName="card_info" domainObjectName="CardInfo">
+            <generatedKey column="id" sqlStatement="mysql"
+                          identity="true" />
+        </table>
     </context>
 </generatorConfiguration>

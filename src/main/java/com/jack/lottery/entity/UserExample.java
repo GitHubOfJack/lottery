@@ -934,6 +934,126 @@ public class UserExample {
             addCriterion("img_url not between", value1, value2, "imgUrl");
             return (Criteria) this;
         }
+
+        public Criteria andCardIdIsNull() {
+            addCriterion("card_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdIsNotNull() {
+            addCriterion("card_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdEqualTo(Long value) {
+            addCriterion("card_id =", value, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdNotEqualTo(Long value) {
+            addCriterion("card_id <>", value, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdGreaterThan(Long value) {
+            addCriterion("card_id >", value, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("card_id >=", value, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdLessThan(Long value) {
+            addCriterion("card_id <", value, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdLessThanOrEqualTo(Long value) {
+            addCriterion("card_id <=", value, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdIn(List<Long> values) {
+            addCriterion("card_id in", values, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdNotIn(List<Long> values) {
+            addCriterion("card_id not in", values, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdBetween(Long value1, Long value2) {
+            addCriterion("card_id between", value1, value2, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCardIdNotBetween(Long value1, Long value2) {
+            addCriterion("card_id not between", value1, value2, "cardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentIsNull() {
+            addCriterion("win_percent is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentIsNotNull() {
+            addCriterion("win_percent is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentEqualTo(Double value) {
+            addCriterion("win_percent =", value, "winPercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentNotEqualTo(Double value) {
+            addCriterion("win_percent <>", value, "winPercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentGreaterThan(Double value) {
+            addCriterion("win_percent >", value, "winPercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentGreaterThanOrEqualTo(Double value) {
+            addCriterion("win_percent >=", value, "winPercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentLessThan(Double value) {
+            addCriterion("win_percent <", value, "winPercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentLessThanOrEqualTo(Double value) {
+            addCriterion("win_percent <=", value, "winPercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentIn(List<Double> values) {
+            addCriterion("win_percent in", values, "winPercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentNotIn(List<Double> values) {
+            addCriterion("win_percent not in", values, "winPercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentBetween(Double value1, Double value2) {
+            addCriterion("win_percent between", value1, value2, "winPercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPercentNotBetween(Double value1, Double value2) {
+            addCriterion("win_percent not between", value1, value2, "winPercent");
+            return (Criteria) this;
+        }
     }
 
     /**
