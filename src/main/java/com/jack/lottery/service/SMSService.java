@@ -6,6 +6,7 @@ import com.jack.lottery.entity.SMSCode;
 import com.jack.lottery.mapper.SMSCodeMapper;
 import com.jack.lottery.utils.RandomUtils;
 import com.jack.lottery.utils.URLConnectionUtil;
+import com.jack.lottery.utils.exception.InterfaceException;
 import net.sf.json.JSON;
 import net.sf.json.xml.XMLSerializer;
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ public class SMSService {
     @Autowired
     private SMSCodeDao smsCodeDao;
 
-    public boolean send(String mobile, int type) {
+    public boolean send(String mobile, int type) throws InterfaceException {
         String verificationCode = RandomUtils.getRandomNumber(4);
         if (1 == type) {
             return sendVoiceMsg(mobile, verificationCode);
@@ -62,7 +63,7 @@ public class SMSService {
     /**
      * 发送验证码短信
      * */
-    private boolean sendMsg(String mobile, String verificationCode) {
+    private boolean sendMsg(String mobile, String verificationCode) throws InterfaceException {
         String content = String.format(smsContent, verificationCode);
         String smsParam = createSMSParam(mobile, content, 0);
         String response = URLConnectionUtil.doGet(url, smsParam);
@@ -70,22 +71,24 @@ public class SMSService {
             //发送成功，插入数据库
             smsCodeDao.insertSMSCode(mobile, verificationCode);
             return true;
+        } else {
+            throw new InterfaceException("运营商返回结果异常");
         }
-        return false;
     }
 
     /**
      * 发送语音验证码短信
      * */
-    private boolean sendVoiceMsg(String mobile, String verificationCode) {
+    private boolean sendVoiceMsg(String mobile, String verificationCode) throws InterfaceException {
         String smsParam = createSMSParam(mobile, verificationCode, 1);
         String response = URLConnectionUtil.doGet(url, smsParam);
         if (checkResponse(response)) {
             //发送成功，插入数据库
             smsCodeDao.insertSMSCode(mobile, verificationCode);
             return true;
+        } else {
+            throw new InterfaceException("运营商返回结果异常");
         }
-        return false;
     }
 
     private String createSMSParam(String mobile, String content, int type) {

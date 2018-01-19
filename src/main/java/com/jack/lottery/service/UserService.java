@@ -43,7 +43,10 @@ public class UserService {
     private CardInfoDao cardInfoDao;
 
     @Value("${user.profile.img.path}")
-    private String imgPath;
+    private String imgSavePath;
+
+    @Value("${user.profile.query.img.path}")
+    private String imgQueryPath;
 
     /**
      * 根据用户ID查询用户信息
@@ -245,11 +248,13 @@ public class UserService {
     }
 
     public boolean updateUserImg(long userId, String img) {
-        String imgAddr = imgPath + userId;
-        LotteryStringUtil.generateImage(img, imgAddr);
+        String imgAddr = imgSavePath + userId + ".jpeg";
+        if (!LotteryStringUtil.generateImage(img, imgAddr)) {
+            return false;
+        }
         User user = new User();
         user.setId(userId);
-        user.setImgUrl(imgAddr);
+        user.setImgUrl(imgQueryPath + userId + ".jpeg");
         userDao.updateUserByUserId(user);
         return true;
     }
