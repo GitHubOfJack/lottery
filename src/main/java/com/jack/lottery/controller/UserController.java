@@ -1,10 +1,12 @@
 package com.jack.lottery.controller;
 
+import com.jack.lottery.entity.User;
 import com.jack.lottery.enums.IdType;
 import com.jack.lottery.service.OrderService;
 import com.jack.lottery.service.UserService;
 import com.jack.lottery.utils.LotteryStringUtil;
 import com.jack.lottery.utils.VerificationCode;
+import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.utils.exception.ExceptionHandler;
 import com.jack.lottery.utils.exception.ParamException;
@@ -300,10 +302,12 @@ public class UserController {
      * */
     @RequestMapping("bindCard")
     public CommonResponose<Boolean> bindCard(long userId, String cardNo, String branch,
-                                             String province, String city, String bankName) {
+                                             String province, String city, String bankName,
+                                             String name) {
         try {
-            checkBindCardParam(userId, cardNo, branch, province, city, bankName);
-            return new CommonResponose<>(userService.bindCard(userId, cardNo, branch, province, city, bankName));
+            checkBindCardParam(userId, cardNo, branch, province, city, bankName, name);
+            return new CommonResponose<>(userService.bindCard(userId, cardNo, branch,
+                    province, city, bankName, name));
         } catch (Exception e) {
             logger.error("实名接口报错,入参:{},{},{},{}",userId, cardNo, branch, e);
             return Exception2ResponseUtils.getResponse(e);
@@ -311,7 +315,8 @@ public class UserController {
     }
 
     private void checkBindCardParam(long userId, String cardNo, String branch,
-                                    String province, String city, String bankName) throws ParamException {
+                                    String province, String city, String bankName,
+                                    String name) throws BaseException {
         if (0 >= userId) {
             throw new ParamException("用户编号不存在");
         }
@@ -329,6 +334,13 @@ public class UserController {
         }
         if (StringUtils.isBlank(bankName)) {
             throw new ParamException("银行不能为空");
+        }
+        if (StringUtils.isBlank(name)) {
+            throw new ParamException("用户姓名为空");
+        }
+        User user = userService.getUserInfoById(userId);
+        if (!user.getRealName().equals(name)) {
+            throw new ParamException("银行卡实名信息必须与身份证实名信息一致");
         }
     }
 }

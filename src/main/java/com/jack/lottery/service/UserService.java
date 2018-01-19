@@ -218,7 +218,8 @@ public class UserService {
     }
 
     public boolean bindCard(long userId, String cardNo, String branch,
-                            String province, String city, String bankName) {
+                            String province, String city, String bankName,
+                            String name) {
         CardInfo cardInfo = createCardInfo(cardNo, branch, province, city, bankName);
         User user = new User();
         user.setId(userId);
