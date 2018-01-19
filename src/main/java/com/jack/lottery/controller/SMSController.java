@@ -50,7 +50,7 @@ public class SMSController {
     public CommonResponose<Boolean> sendMsg(String mobile, int type,
                                             boolean checkMobile) throws BaseException {
         try {
-            validateSendMsg(mobile, type, checkMobile);
+            //validateSendMsg(mobile, type, checkMobile);
             return new CommonResponose(smsService.send(mobile, type));
         } catch (Exception e) {
             return Exception2ResponseUtils.getResponse(e);
