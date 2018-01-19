@@ -5,10 +5,8 @@ import com.jack.lottery.enums.IdType;
 import com.jack.lottery.service.OrderService;
 import com.jack.lottery.service.UserService;
 import com.jack.lottery.utils.LotteryStringUtil;
-import com.jack.lottery.utils.VerificationCode;
 import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
-import com.jack.lottery.utils.exception.ExceptionHandler;
 import com.jack.lottery.utils.exception.ParamException;
 import com.jack.lottery.vo.CommonResponose;
 import com.jack.lottery.vo.LoginResponse;
@@ -18,13 +16,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 
 @RestController
@@ -292,7 +292,7 @@ public class UserController {
         if (StringUtils.isBlank(idNo)) {
             throw new ParamException("证件号码为空");
         }
-        if (LotteryStringUtil.validateIdNo(idNo)) {
+        if (!LotteryStringUtil.validateIdNo(idNo)) {
             throw new ParamException("证件号码格式错误");
         }
     }
@@ -341,6 +341,19 @@ public class UserController {
         User user = userService.getUserInfoById(userId);
         if (!user.getRealName().equals(name)) {
             throw new ParamException("银行卡实名信息必须与身份证实名信息一致");
+        }
+    }
+
+    /**
+     * 上传用户头像
+     * */
+    @RequestMapping("/uploadImg")
+    public CommonResponose<Boolean> uploadImg(long userId, String img) {
+        try {
+            return new CommonResponose<>(userService.updateUserImg(userId, img));
+        } catch (Exception e) {
+            logger.error("头像上传接口报错", e);
+            return Exception2ResponseUtils.getResponse(e);
         }
     }
 }

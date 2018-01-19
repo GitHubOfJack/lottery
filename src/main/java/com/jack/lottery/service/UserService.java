@@ -5,6 +5,7 @@ import com.jack.lottery.dao.CardInfoDao;
 import com.jack.lottery.dao.SMSCodeDao;
 import com.jack.lottery.dao.UserDao;
 import com.jack.lottery.entity.*;
+import com.jack.lottery.utils.LotteryStringUtil;
 import com.jack.lottery.utils.MD5Util;
 import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.DBException;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -39,6 +41,9 @@ public class UserService {
 
     @Autowired
     private CardInfoDao cardInfoDao;
+
+    @Value("${user.profile.img.path}")
+    private String imgPath;
 
     /**
      * 根据用户ID查询用户信息
@@ -237,5 +242,15 @@ public class UserService {
         info.setCity(city);
         info.setProvince(province);
         return info;
+    }
+
+    public boolean updateUserImg(long userId, String img) {
+        String imgAddr = imgPath + userId;
+        LotteryStringUtil.generateImage(img, imgAddr);
+        User user = new User();
+        user.setId(userId);
+        user.setImgUrl(imgAddr);
+        userDao.updateUserByUserId(user);
+        return true;
     }
 }
