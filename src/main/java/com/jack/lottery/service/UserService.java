@@ -188,6 +188,8 @@ public class UserService {
         Account account = accountDao.getAccountByUserId(userId);
         QueryUserBasicInfoResp resp = new QueryUserBasicInfoResp();
         resp.setBalance(account.getBalance());
+        resp.setAvaiableBalance(account.getAvailableBalance());
+        resp.setFreezeBalance(account.getFreezeBalance());
         resp.setImgUrl(userInfo.getImgUrl());
         resp.setMobile(userInfo.getMobile());
         resp.setNickName(userInfo.getNickName());

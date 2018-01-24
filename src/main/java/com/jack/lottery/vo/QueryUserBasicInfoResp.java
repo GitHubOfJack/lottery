@@ -9,9 +9,19 @@ public class QueryUserBasicInfoResp {
     private String nickName;
 
     /**
-     * 用户余额
+     * 用户总余额
      * */
     private BigDecimal balance;
+
+    /**
+     * 可用余额
+     * */
+    private BigDecimal avaiableBalance;
+
+    /**
+     * 冻结金额
+     * */
+    private BigDecimal freezeBalance;
 
     /**
      * 用户累计中奖金额
@@ -159,11 +169,29 @@ public class QueryUserBasicInfoResp {
         this.idNo = idNo;
     }
 
+    public BigDecimal getAvaiableBalance() {
+        return avaiableBalance;
+    }
+
+    public void setAvaiableBalance(BigDecimal avaiableBalance) {
+        this.avaiableBalance = avaiableBalance;
+    }
+
+    public BigDecimal getFreezeBalance() {
+        return freezeBalance;
+    }
+
+    public void setFreezeBalance(BigDecimal freezeBalance) {
+        this.freezeBalance = freezeBalance;
+    }
+
     @Override
     public String toString() {
         return "QueryUserBasicInfoResp{" +
                 "nickName='" + nickName + '\'' +
                 ", balance=" + balance +
+                ", avaiableBalance=" + avaiableBalance +
+                ", freezeBalance=" + freezeBalance +
                 ", winPrize=" + winPrize +
                 ", mobile='" + mobile + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +

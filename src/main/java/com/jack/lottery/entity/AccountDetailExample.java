@@ -576,73 +576,73 @@ public class AccountDetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andDescIsNull() {
-            addCriterion("desc is null");
+        public Criteria andMsgIsNull() {
+            addCriterion("msg is null");
             return (Criteria) this;
         }
 
-        public Criteria andDescIsNotNull() {
-            addCriterion("desc is not null");
+        public Criteria andMsgIsNotNull() {
+            addCriterion("msg is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDescEqualTo(String value) {
-            addCriterion("desc =", value, "desc");
+        public Criteria andMsgEqualTo(String value) {
+            addCriterion("msg =", value, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotEqualTo(String value) {
-            addCriterion("desc <>", value, "desc");
+        public Criteria andMsgNotEqualTo(String value) {
+            addCriterion("msg <>", value, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescGreaterThan(String value) {
-            addCriterion("desc >", value, "desc");
+        public Criteria andMsgGreaterThan(String value) {
+            addCriterion("msg >", value, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescGreaterThanOrEqualTo(String value) {
-            addCriterion("desc >=", value, "desc");
+        public Criteria andMsgGreaterThanOrEqualTo(String value) {
+            addCriterion("msg >=", value, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescLessThan(String value) {
-            addCriterion("desc <", value, "desc");
+        public Criteria andMsgLessThan(String value) {
+            addCriterion("msg <", value, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescLessThanOrEqualTo(String value) {
-            addCriterion("desc <=", value, "desc");
+        public Criteria andMsgLessThanOrEqualTo(String value) {
+            addCriterion("msg <=", value, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescLike(String value) {
-            addCriterion("desc like", value, "desc");
+        public Criteria andMsgLike(String value) {
+            addCriterion("msg like", value, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotLike(String value) {
-            addCriterion("desc not like", value, "desc");
+        public Criteria andMsgNotLike(String value) {
+            addCriterion("msg not like", value, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescIn(List<String> values) {
-            addCriterion("desc in", values, "desc");
+        public Criteria andMsgIn(List<String> values) {
+            addCriterion("msg in", values, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotIn(List<String> values) {
-            addCriterion("desc not in", values, "desc");
+        public Criteria andMsgNotIn(List<String> values) {
+            addCriterion("msg not in", values, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescBetween(String value1, String value2) {
-            addCriterion("desc between", value1, value2, "desc");
+        public Criteria andMsgBetween(String value1, String value2) {
+            addCriterion("msg between", value1, value2, "msg");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotBetween(String value1, String value2) {
-            addCriterion("desc not between", value1, value2, "desc");
+        public Criteria andMsgNotBetween(String value1, String value2) {
+            addCriterion("msg not between", value1, value2, "msg");
             return (Criteria) this;
         }
 

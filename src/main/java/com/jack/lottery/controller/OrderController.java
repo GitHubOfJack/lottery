@@ -66,7 +66,7 @@ public class OrderController {
             boolean success = orderService.buyLottery(userId, type, content, amount, num, muti, addition, stopAfterWin);
             return new CommonResponose<>(success);
         } catch (Exception e) {
-            logger.error("购彩接口报错,请求参数");
+            logger.error("购彩接口报错,请求参数,{},{},{}", userId, type, content, e);
             return Exception2ResponseUtils.getResponse(e);
         }
     }

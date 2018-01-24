@@ -9,6 +9,7 @@ public enum ResponseCode {
     UNKNOW_ERROR("4", "未知异常"),
     NOT_LOGIN("5", "用户未登录"),
     SYSTEM_ERROR("6", "系统异常"),
+    BALANCE_ERROR("7", "余额不足"),
     ;
 
     private String resCode;

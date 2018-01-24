@@ -49,7 +49,7 @@ public class UserController {
             if (StringUtils.isBlank(mobile)) {
                 throw new ParamException("手机号为空|mobile="+mobile);
             }
-            return new CommonResponose<>(userService.mobileExist(mobile));
+            return new CommonResponose<>(!userService.mobileExist(mobile));
         } catch (Exception e) {
             logger.error("调用手机号查询用户是否存在报错,请求参数:{}", mobile, e);
             return Exception2ResponseUtils.getResponse(e);
@@ -67,7 +67,7 @@ public class UserController {
             if (StringUtils.isBlank(nickName)) {
                 throw new ParamException("用户昵称为空|nickName="+nickName);
             }
-            return new CommonResponose<>(userService.nickNameExist(nickName));
+            return new CommonResponose<>(!userService.nickNameExist(nickName));
         } catch (Exception e) {
             logger.error("调用昵称查询用户是否存在报错,请求参数:{}", nickName, e);
             return Exception2ResponseUtils.getResponse(e);
@@ -83,12 +83,15 @@ public class UserController {
      * @param nickName 昵称
      * */
     @RequestMapping("/register")
-    public CommonResponose<Boolean> register(String mobile, String password,
-                                             String smsCode, String nickName) {
+    public CommonResponose<LoginResponse> register(String mobile, String password,
+                                             String smsCode, String nickName, HttpServletRequest request) {
         try {
             checkRegisterParam(mobile, password, smsCode, nickName);
             userService.registerUser(mobile, password, smsCode, nickName);
-            return  new CommonResponose<>(true);
+            HttpSession session = request.getSession();
+            LoginResponse resp = userService.loginByPwd(mobile, password);
+            session.setAttribute("loginToken", resp.getToken());
+            return  new CommonResponose<>(resp);
         } catch (Exception e) {
             logger.error("调用注册接口报错,请求参数:{},{},{},{}", mobile, password, smsCode, nickName, e);
             return Exception2ResponseUtils.getResponse(e);

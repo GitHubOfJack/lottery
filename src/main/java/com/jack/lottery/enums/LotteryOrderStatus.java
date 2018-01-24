@@ -13,6 +13,7 @@ public enum  LotteryOrderStatus {
     FAIL("5", "出票失败"),
     WIN("6", "已中奖"),
     CASH("7", "已兑奖"),
+    WIN_FAIL("8", "未中奖"),
     ;
 
     private String code;

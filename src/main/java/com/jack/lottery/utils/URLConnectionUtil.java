@@ -118,7 +118,7 @@ public class URLConnectionUtil {
 					result += line;
 				}
 			}
-
+			conn.disconnect();
 		} catch (Exception e) {
 			System.out.println("发送GET请求出现异常！" + e);
 			e.printStackTrace();

@@ -1116,6 +1116,66 @@ public class LotteryOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andWinPrizeIsNull() {
+            addCriterion("win_prize is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeIsNotNull() {
+            addCriterion("win_prize is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeEqualTo(BigDecimal value) {
+            addCriterion("win_prize =", value, "winPrize");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeNotEqualTo(BigDecimal value) {
+            addCriterion("win_prize <>", value, "winPrize");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeGreaterThan(BigDecimal value) {
+            addCriterion("win_prize >", value, "winPrize");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("win_prize >=", value, "winPrize");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeLessThan(BigDecimal value) {
+            addCriterion("win_prize <", value, "winPrize");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("win_prize <=", value, "winPrize");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeIn(List<BigDecimal> values) {
+            addCriterion("win_prize in", values, "winPrize");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeNotIn(List<BigDecimal> values) {
+            addCriterion("win_prize not in", values, "winPrize");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("win_prize between", value1, value2, "winPrize");
+            return (Criteria) this;
+        }
+
+        public Criteria andWinPrizeNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("win_prize not between", value1, value2, "winPrize");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

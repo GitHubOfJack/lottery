@@ -44,4 +44,19 @@ public class LotteryTermDao {
         PageHelper.startPage(pageNo, pageSize);
         return lotteryTermMapper.selectByExample(example);
     }
+
+    public void insertTerm(LotteryTerm term) {
+        lotteryTermMapper.insertSelective(term);
+    }
+
+    public void updateTerm(LotteryTerm term) {
+        lotteryTermMapper.updateByPrimaryKeySelective(term);
+    }
+
+    public void updateTermByTermNo(LotteryTerm term) {
+        LotteryTermExample example = new LotteryTermExample();
+        example.createCriteria().andTermEqualTo(term.getTerm())
+                .andTypeEqualTo(term.getType());
+        lotteryTermMapper.updateByExampleSelective(term, example);
+    }
 }

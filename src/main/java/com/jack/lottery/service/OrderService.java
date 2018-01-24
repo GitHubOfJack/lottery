@@ -6,6 +6,7 @@ import com.jack.lottery.dao.LotteryOrderDao;
 import com.jack.lottery.dao.RechargeOrderDao;
 import com.jack.lottery.entity.*;
 import com.jack.lottery.enums.*;
+import com.jack.lottery.utils.exception.BalanceException;
 import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.ParamException;
 import com.jack.lottery.vo.QueryOrderResp;
@@ -52,7 +53,7 @@ public class OrderService {
         //验证用户余额
         Account account = accountDao.getAccountByUserId(userId);
         if (account.getAvailableBalance().compareTo(amount) < 0) {
-            throw new ParamException("用户余额不足");
+            throw new BalanceException("用户余额不足");
         }
         //生成订单
         LotteryOrder order = createLotteryOrder(userId, type, content, amount,
@@ -78,10 +79,11 @@ public class OrderService {
         order.setStatus(LotteryOrderStatus.SUBMIT.getCode());
         order.setUpdateTime(now);
         order.setUserid(uerId);
-        if (0 >= muti) {
+        order.setOrderId(UUID.randomUUID().toString());
+        if (0 < muti) {
             order.setMutiply(muti);
         }
-        if (0 >= addition) {
+        if (0 < addition) {
             order.setAddition(addition);
             order.setStopAfterWin(stopAfterWin ? "0" : "1");
         }
@@ -93,7 +95,7 @@ public class OrderService {
         AccountDetail accountDetail = new AccountDetail();
         accountDetail.setAmount(amount);
         accountDetail.setCreateTime(now);
-        accountDetail.setDesc("用户购买冻结,冻结金额:"+amount);
+        accountDetail.setMsg("用户购买冻结,冻结金额:"+amount);
         accountDetail.setType(OrderDetailType.BUY_FREEZE.getCode());
         accountDetail.setUpdateTime(now);
         accountDetail.setUserid(uerId);
@@ -116,6 +118,27 @@ public class OrderService {
         return lotteryOrderDao.getOrdersByUserIdAndStatus(userId, status, pageNo, pageSize);
     }
 
+    private List<LotteryOrder> changeOrderStatus(List<LotteryOrder> orders) {
+        for (LotteryOrder order : orders) {
+            String status = order.getStatus();
+            if (status.equals(LotteryOrderStatus.SUBMIT.getCode()) ||
+                    status.equals(LotteryOrderStatus.SEND_SUCCESS.getCode()) ||
+                    status.equals(LotteryOrderStatus.SUCCESS.getCode())) {
+                status = "待开奖";
+            } else if (status.equals(LotteryOrderStatus.WIN.getCode()) ||
+                    status.equals(LotteryOrderStatus.CASH.getCode())) {
+                status = "已中奖";
+            } else if (status.equals(LotteryOrderStatus.WIN_FAIL.getCode())) {
+                status = "未中奖";
+            } else if (status.equals(LotteryOrderStatus.SEND_FAIL.getCode()) ||
+                    status.equals(LotteryOrderStatus.FAIL.getCode())) {
+                status = "已作废";
+            }
+            order.setStatus(status);
+        }
+        return orders;
+    }
+
     public QueryOrderResp queryOrder(long userId, String status, int pageNo, int pageSize) {
         if (!StringUtils.isBlank(status)) {
             try {
@@ -135,7 +158,7 @@ public class OrderService {
         QueryOrderResp resp = new QueryOrderResp();
         resp.setTotalPage(page);
         resp.setTotal(count);
-        resp.setOrders(getOrderListByUserIdAndStatus(userId, status, pageNo, pageSize));
+        resp.setOrders(changeOrderStatus(getOrderListByUserIdAndStatus(userId, status, pageNo, pageSize)));
         return resp;
     }
 
