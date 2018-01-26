@@ -1,6 +1,9 @@
 package com.jack.lottery.controller;
 
+import com.jack.lottery.buss.LotteryCacheBuss;
 import com.jack.lottery.entity.LotteryTerm;
+import com.jack.lottery.enums.LotteryType;
+import com.jack.lottery.po.LotteryHistory;
 import com.jack.lottery.service.LotteryService;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.vo.CommonResponose;
@@ -11,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/lottery")
 public class LotteryController {
@@ -19,6 +25,9 @@ public class LotteryController {
 
     @Autowired
     private LotteryService lotteryService;
+
+    @Autowired
+    private LotteryCacheBuss lotteryCacheBuss;
 
     /**
      * 根据彩票类型获得当前期
@@ -56,6 +65,39 @@ public class LotteryController {
             return new CommonResponose<>(resp);
         } catch (Exception e) {
             logger.error("查询历史期异常,查询类型,type:{}", type, e);
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    /**
+     * 获取最新开奖
+     * */
+    public CommonResponose<List<LotteryTerm>> getLatestTerm() {
+        try {
+            List<LotteryTerm> terms = new ArrayList<>();
+            for (LotteryType type : LotteryType.values()) {
+                terms.add(lotteryCacheBuss.getLatestTerm(type));
+            }
+            return new CommonResponose<>(terms);
+        } catch (Exception e) {
+            logger.error("查询最近开奖异常", e);
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    /**
+     * 获取某一期开奖详情
+     * @see com.jack.lottery.enums.LotteryType
+     * @param type 产品类型
+     * @param termNo 期号
+     * */
+    public CommonResponose<LotteryHistory> getOpenDetail(int type, String termNo) {
+        try {
+            LotteryType lotteryType = LotteryType.getTypeByCode(type);
+            LotteryHistory history = lotteryCacheBuss.getCache(lotteryType, termNo);
+            return new CommonResponose<>(history);
+        } catch (Exception e) {
+            logger.error("获取某一期开奖详情报错,{}, {}", type, termNo, e);
             return Exception2ResponseUtils.getResponse(e);
         }
     }

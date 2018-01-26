@@ -714,6 +714,76 @@ public class LotteryTermExample {
             addCriterion("result not between", value1, value2, "result");
             return (Criteria) this;
         }
+
+        public Criteria andPrizeDetailIsNull() {
+            addCriterion("prize_detail is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailIsNotNull() {
+            addCriterion("prize_detail is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailEqualTo(String value) {
+            addCriterion("prize_detail =", value, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailNotEqualTo(String value) {
+            addCriterion("prize_detail <>", value, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailGreaterThan(String value) {
+            addCriterion("prize_detail >", value, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailGreaterThanOrEqualTo(String value) {
+            addCriterion("prize_detail >=", value, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailLessThan(String value) {
+            addCriterion("prize_detail <", value, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailLessThanOrEqualTo(String value) {
+            addCriterion("prize_detail <=", value, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailLike(String value) {
+            addCriterion("prize_detail like", value, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailNotLike(String value) {
+            addCriterion("prize_detail not like", value, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailIn(List<String> values) {
+            addCriterion("prize_detail in", values, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailNotIn(List<String> values) {
+            addCriterion("prize_detail not in", values, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailBetween(String value1, String value2) {
+            addCriterion("prize_detail between", value1, value2, "prizeDetail");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrizeDetailNotBetween(String value1, String value2) {
+            addCriterion("prize_detail not between", value1, value2, "prizeDetail");
+            return (Criteria) this;
+        }
     }
 
     /**
