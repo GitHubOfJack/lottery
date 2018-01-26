@@ -21,20 +21,17 @@ public class LotteryCacheBuss {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private LotteryBuss lotteryBuss;
-
-    @Autowired
     private LotteryService lotteryService;
 
     private LoadingCache<String, LotteryHistory> lotteryHistoryCache = CacheBuilder.newBuilder()
             .refreshAfterWrite(1, TimeUnit.DAYS)
             .expireAfterAccess(1, TimeUnit.DAYS)
-            .maximumSize(10000)
+            .maximumSize(1000)
             .build(new CacheLoader<String, LotteryHistory>() {
                 @Override
                 public LotteryHistory load(String s) throws Exception {
                     String[] strings = deGenerateCacheKey(s);
-                    return lotteryBuss.getHistory(LotteryType.getTypeByCode(strings[0]), strings[1]);
+                    return lotteryService.getLotteryHistory(LotteryType.getTypeByCode(strings[0]), strings[1]);
                 }
             });
 

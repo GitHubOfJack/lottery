@@ -59,4 +59,14 @@ public class LotteryTermDao {
                 .andTypeEqualTo(term.getType());
         lotteryTermMapper.updateByExampleSelective(term, example);
     }
+
+    public LotteryTerm getLotteryTermByTypeAndTermNo(LotteryType type, String termNo) throws ParamException {
+        LotteryTermExample example = new LotteryTermExample();
+        example.createCriteria().andTypeEqualTo(String.valueOf(type.getCode())).andTermEqualTo(termNo);
+        List<LotteryTerm> lotteryTerms = lotteryTermMapper.selectByExample(example);
+        if (null == lotteryTerms || lotteryTerms.isEmpty()) {
+            throw new ParamException("该期不存在");
+        }
+        return lotteryTerms.get(0);
+    }
 }

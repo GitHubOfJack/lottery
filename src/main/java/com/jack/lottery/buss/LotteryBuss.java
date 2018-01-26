@@ -1,19 +1,12 @@
 package com.jack.lottery.buss;
 
-import com.jack.lottery.buss.dlt.DLTFetchHistory;
-import com.jack.lottery.buss.pls.PLSFetchHistory;
-import com.jack.lottery.buss.plw.PLWFetchHistory;
-import com.jack.lottery.buss.sd.SDFetchHistory;
-import com.jack.lottery.buss.ssq.SSQFetchHistory;
 import com.jack.lottery.enums.LotteryType;
-import com.jack.lottery.po.LotteryHistory;
 import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.ParamException;
 import com.jack.lottery.utils.exception.SystermException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
@@ -21,21 +14,6 @@ import java.math.BigDecimal;
 public class LotteryBuss {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    @Autowired
-    private SSQFetchHistory ssqFetchHistory;
-
-    @Autowired
-    private DLTFetchHistory dltFetchHistory;
-
-    @Autowired
-    private PLSFetchHistory plsFetchHistory;
-
-    @Autowired
-    private PLWFetchHistory plwFetchHistory;
-
-    @Autowired
-    private SDFetchHistory sdFetchHistory;
 
     /**
      * 验证投注内容
@@ -280,21 +258,5 @@ public class LotteryBuss {
         int minInt = Integer.parseInt(min);
         int nInt = Integer.parseInt(n);
         return nInt >= minInt && nInt <= maxInt;
-    }
-
-    public LotteryHistory getHistory(LotteryType type, String termNo) {
-        LotteryHistory history = null;
-        if (type.equals(LotteryType.SSQ)) {
-            history = ssqFetchHistory.getSSQHistory(termNo);
-        } else if (type.equals(LotteryType.DLT)) {
-            history = dltFetchHistory.getDLTHistory(termNo);
-        } else if (type.equals(LotteryType.PLS)) {
-            history = plsFetchHistory.getPLSHistory(termNo);
-        } else if (type.equals(LotteryType.PLW)) {
-            history = plwFetchHistory.getPLWHistory(termNo);
-        } else if (type.equals(LotteryType.SD)) {
-            history = sdFetchHistory.getSDHistory(termNo);
-        }
-        return history;
     }
 }
