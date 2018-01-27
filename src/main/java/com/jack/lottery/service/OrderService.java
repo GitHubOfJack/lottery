@@ -9,6 +9,7 @@ import com.jack.lottery.enums.*;
 import com.jack.lottery.utils.exception.BalanceException;
 import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.ParamException;
+import com.jack.lottery.vo.LotteryOrderDetail;
 import com.jack.lottery.vo.QueryOrderResp;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -184,5 +185,17 @@ public class OrderService {
         order.setUpdateTime(now);
         order.setUserid(userId);
         return order;
+    }
+
+    public LotteryOrderDetail getLotteryOrderDetail(long userId, long orderId) throws ParamException {
+        LotteryOrder order = lotteryOrderDao.getOrderById(orderId);
+        if (null == order || userId != order.getUserid().longValue()) {
+            throw new ParamException("订单不存在");
+        }
+        LotteryOrderDetail detail = new LotteryOrderDetail();
+        LotteryTerm term = lotteryService.getLotteryTermByTypeAndNo(order.getLotteryType(), order.getLotteryTerm());
+        detail.setOrderDetailInfo(detail.buildOrderDetailInfo(order, term));
+        detail.setTicketDetailInfo(detail.buildTicketDetailInfo(order.getMsg()));
+        return detail;
     }
 }

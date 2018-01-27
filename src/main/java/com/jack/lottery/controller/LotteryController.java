@@ -3,11 +3,11 @@ package com.jack.lottery.controller;
 import com.jack.lottery.buss.LotteryCacheBuss;
 import com.jack.lottery.entity.LotteryTerm;
 import com.jack.lottery.enums.LotteryType;
-import com.jack.lottery.po.LotteryHistory;
 import com.jack.lottery.service.LotteryService;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.vo.CommonResponose;
 import com.jack.lottery.vo.GetHistoryTermResp;
+import com.jack.lottery.vo.LotteryHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +72,7 @@ public class LotteryController {
     /**
      * 获取最新开奖
      * */
+    @RequestMapping("/getLatestTerm")
     public CommonResponose<List<LotteryTerm>> getLatestTerm() {
         try {
             List<LotteryTerm> terms = new ArrayList<>();
@@ -91,6 +92,7 @@ public class LotteryController {
      * @param type 产品类型
      * @param termNo 期号
      * */
+    @RequestMapping("/getOpenDetail")
     public CommonResponose<LotteryHistory> getOpenDetail(int type, String termNo) {
         try {
             LotteryType lotteryType = LotteryType.getTypeByCode(type);

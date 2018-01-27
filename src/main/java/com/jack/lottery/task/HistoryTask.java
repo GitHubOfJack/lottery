@@ -1,7 +1,7 @@
 package com.jack.lottery.task;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jack.lottery.po.PrizeDetail;
+import com.jack.lottery.vo.PrizeDetail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -376,10 +376,6 @@ public class HistoryTask {
 
             List<PrizeDetail> detailList = new ArrayList<>();
             Elements trs = document1.getElementsByClass("kj_tablelist02").get(1).getElementsByTag("tr");
-
-            if (termNo.equals("2017195")) {
-                System.out.println("dao");
-            }
 
             PrizeDetail prize1 = new PrizeDetail();
             Elements tds1 = trs.get(2).getElementsByTag("td");

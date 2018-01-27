@@ -39,4 +39,8 @@ public class LotteryOrderDao {
         List<LotteryOrder> lotteryOrders = lotteryOrderMapper.selectByExample(example);
         return lotteryOrders;
     }
+
+    public LotteryOrder getOrderById(long orderId) {
+        return lotteryOrderMapper.selectByPrimaryKey(orderId);
+    }
 }

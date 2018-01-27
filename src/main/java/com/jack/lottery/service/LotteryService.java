@@ -6,18 +6,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.jack.lottery.dao.LotteryTermDao;
 import com.jack.lottery.entity.LotteryTerm;
 import com.jack.lottery.enums.LotteryType;
-import com.jack.lottery.po.LotteryHistory;
-import com.jack.lottery.po.PrizeDetail;
 import com.jack.lottery.utils.exception.BaseException;
 import com.jack.lottery.utils.exception.ParamException;
 import com.jack.lottery.vo.GetHistoryTermResp;
+import com.jack.lottery.vo.LotteryHistory;
+import com.jack.lottery.vo.PrizeDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -39,6 +38,10 @@ public class LotteryService {
         resp.setTotalPage(page);
         resp.setTerms(historyTerms);
         return resp;
+    }
+
+    public LotteryTerm getLotteryTermByTypeAndNo(String type, String termNo) throws ParamException {
+        return lotteryTermDao.getLotteryTermByTypeAndTermNo(LotteryType.getTypeByCode(type), termNo);
     }
 
     public LotteryHistory getLotteryHistory(LotteryType type, String termNo) throws ParamException {

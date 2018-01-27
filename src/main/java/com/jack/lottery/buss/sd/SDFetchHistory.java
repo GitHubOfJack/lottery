@@ -3,10 +3,10 @@ package com.jack.lottery.buss.sd;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.lottery.enums.LotteryType;
 import com.jack.lottery.enums.WEBSITE;
-import com.jack.lottery.po.LotteryHistory;
-import com.jack.lottery.po.PrizeDetail;
 import com.jack.lottery.service.LotteryService;
 import com.jack.lottery.utils.URLConnectionUtil;
+import com.jack.lottery.vo.LotteryHistory;
+import com.jack.lottery.vo.PrizeDetail;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -125,21 +125,28 @@ public class SDFetchHistory {
 
         PrizeDetail prize1 = new PrizeDetail();
         Elements tds1 = trs.get(2).getElementsByTag("td");
-        prize1.setAmount(BigDecimal.valueOf(Double.parseDouble(tds1.get(2).text())));
+        prize1.setAmount(BigDecimal.valueOf(Double.parseDouble(tds1.get(2).text().replace(",", ""))));
         prize1.setName(String.valueOf(1));
         prize1.setNum(Integer.parseInt(tds1.get(1).text()));
         detailList.add(prize1);
 
-        PrizeDetail prize2 = new PrizeDetail();
         Elements tds2 = trs.get(3).getElementsByTag("td");
-        if (tds2.get(0).text().equals("组三")) {
-            prize2.setName(String.valueOf(2));
-        } else {
-            prize2.setName(String.valueOf(3));
+        if (tds2.get(0).text().equals("组三") || tds2.get(0).text().equals("组六")) {
+            PrizeDetail prize2 = new PrizeDetail();
+            if (tds2.get(0).text().equals("组三")) {
+                prize2.setName(String.valueOf(2));
+            } else {
+                prize2.setName(String.valueOf(3));
+            }
+            if (tds2.get(2).text().contains("--") || tds2.get(1).text().contains("--")) {
+                prize2.setAmount(BigDecimal.ZERO);
+                prize2.setNum(0);
+            } else {
+                prize2.setAmount(BigDecimal.valueOf(Double.parseDouble(tds2.get(2).text().replace(",", ""))));
+                prize2.setNum(Integer.parseInt(tds2.get(1).text()));
+            }
+            detailList.add(prize2);
         }
-        prize2.setAmount(BigDecimal.valueOf(Double.parseDouble(tds2.get(2).text())));
-        prize2.setNum(Integer.parseInt(tds2.get(1).text()));
-        detailList.add(prize2);
 
         return detailList;
     }

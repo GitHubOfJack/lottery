@@ -1,4 +1,4 @@
-package com.jack.lottery.po;
+package com.jack.lottery.vo;
 
 import java.math.BigDecimal;
 

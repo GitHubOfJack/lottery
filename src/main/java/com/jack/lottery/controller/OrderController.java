@@ -4,6 +4,7 @@ import com.jack.lottery.service.OrderService;
 import com.jack.lottery.utils.exception.Exception2ResponseUtils;
 import com.jack.lottery.utils.exception.ParamException;
 import com.jack.lottery.vo.CommonResponose;
+import com.jack.lottery.vo.LotteryOrderDetail;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,6 +88,26 @@ public class OrderController {
         }
         if (0 >= num) {
             throw new ParamException("投注注数不正确");
+        }
+    }
+
+    @RequestMapping("getLotteryOrderDetail")
+    public CommonResponose<LotteryOrderDetail> getLotteryOrderDetail(long userId, long orderId) {
+        try {
+            checkGetLotteryOrderDetail(userId, orderId);
+            return new CommonResponose<>(orderService.getLotteryOrderDetail(userId, orderId));
+        } catch (Exception e) {
+            logger.error("获取购彩详情接口,入参{},{}", userId, orderId, e);
+            return Exception2ResponseUtils.getResponse(e);
+        }
+    }
+
+    private void checkGetLotteryOrderDetail(long userId, long orderId) throws ParamException {
+        if (0 >= userId) {
+            throw new ParamException("用户编号不存在");
+        }
+        if (0 >= orderId) {
+            throw new ParamException("订单不存在");
         }
     }
 }
