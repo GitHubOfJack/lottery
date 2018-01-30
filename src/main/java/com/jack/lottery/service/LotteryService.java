@@ -103,11 +103,12 @@ public class LotteryService {
         lotteryTermDao.insertTerm(term);
     }
 
-    public void updateTermByTermNo(LotteryType type, String term, String result) {
+    public void updateTermByTermNo(LotteryType type, String term, String result, String detail) {
         LotteryTerm lotteryTerm = new LotteryTerm();
         lotteryTerm.setResult(result);
         lotteryTerm.setTerm(term);
         lotteryTerm.setType(String.valueOf(type.getCode()));
+        lotteryTerm.setPrizeDetail(detail);
         lotteryTermDao.updateTerm(lotteryTerm);
     }
 }

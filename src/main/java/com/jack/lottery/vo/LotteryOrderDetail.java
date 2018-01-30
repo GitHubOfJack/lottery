@@ -7,6 +7,7 @@ import com.jack.lottery.enums.LotteryType;
 import com.jack.lottery.utils.exception.ParamException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public class LotteryOrderDetail {
     private OrderDetailInfo orderDetailInfo;
 
     //出票详情信息
-    private TicketDetailInfo ticketDetailInfo;
+    private List<TicketDetailInfo> ticketDetailInfos;
 
     public OrderDetailInfo getOrderDetailInfo() {
         return orderDetailInfo;
@@ -29,19 +30,19 @@ public class LotteryOrderDetail {
         this.orderDetailInfo = orderDetailInfo;
     }
 
-    public TicketDetailInfo getTicketDetailInfo() {
-        return ticketDetailInfo;
+    public List<TicketDetailInfo> getTicketDetailInfos() {
+        return ticketDetailInfos;
     }
 
-    public void setTicketDetailInfo(TicketDetailInfo ticketDetailInfo) {
-        this.ticketDetailInfo = ticketDetailInfo;
+    public void setTicketDetailInfos(List<TicketDetailInfo> ticketDetailInfos) {
+        this.ticketDetailInfos = ticketDetailInfos;
     }
 
     @Override
     public String toString() {
         return "LotteryOrderDetail{" +
                 "orderDetailInfo=" + orderDetailInfo +
-                ", ticketDetailInfo=" + ticketDetailInfo +
+                ", ticketDetailInfos=" + ticketDetailInfos +
                 '}';
     }
 
@@ -56,6 +57,7 @@ public class LotteryOrderDetail {
         info.setOpenResult(term.getResult());
         info.setOrderNo(order.getOrderId());
         info.setOrderTime(order.getCreateTime());
+        info.setPlayType("直选");
         if ((LotteryType.SD.equals(type) || LotteryType.PLS.equals(type))) {
             if (order.getLotteryContent().contains("zs_bh")) {
                 info.setPlayType("组三包号");
@@ -65,7 +67,8 @@ public class LotteryOrderDetail {
         }
         info.setStopAfterWin(order.getStopAfterWin().equals("0") ? true : false);
         info.setTermNo(term.getTerm());
-        info.setWinAmount(order.getWinPrize());
+        BigDecimal winPrize = null == order.getWinPrize() ? BigDecimal.ZERO : order.getWinPrize();
+        info.setWinAmount(winPrize);
         LotteryOrderStatus orderStatus = LotteryOrderStatus.getByCode(order.getStatus());
         info.setTicketResult(orderStatus.getTicketStatus());
         info.setWinResult(orderStatus.getWinStatus());
@@ -73,8 +76,8 @@ public class LotteryOrderDetail {
         return info;
     }
 
-    public TicketDetailInfo buildTicketDetailInfo(String notifyMsg) {
-        return null;
+    public List<TicketDetailInfo> buildTicketDetailInfo(String notifyMsg) {
+        return new ArrayList<>();
     }
 
     private class OrderDetailInfo {

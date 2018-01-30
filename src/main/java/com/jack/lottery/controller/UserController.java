@@ -356,6 +356,7 @@ public class UserController {
             if (!img.contains("data:image/jpeg")) {
                 throw new ParamException("文件格式不正确");
             }
+            img = img.substring("data:image/jpeg;base64,".length());
             return new CommonResponose<>(userService.updateUserImg(userId, img));
         } catch (Exception e) {
             logger.error("头像上传接口报错", e);

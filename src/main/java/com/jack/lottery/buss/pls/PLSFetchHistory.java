@@ -37,11 +37,17 @@ public class PLSFetchHistory {
     private LotteryService lotteryService;
 
     public boolean fetchPLSHistory(String termNo) {
-        String result = getPLSHistory(termNo).getResult();
+        LotteryHistory plsHistory = getPLSHistory(termNo);
+        String result = plsHistory.getResult();
         if (StringUtils.isBlank(result)) {
             return false;
         }
-        lotteryService.updateTermByTermNo(LotteryType.PLS, termNo, result);
+        List<PrizeDetail> details = plsHistory.getDetails();
+        String prizeDetail = "";
+        if (null != details) {
+            prizeDetail = JSONObject.toJSONString(details).replace("\"addNum\":0,", "");
+        }
+        lotteryService.updateTermByTermNo(LotteryType.PLS, termNo, result, prizeDetail);
         return true;
     }
 

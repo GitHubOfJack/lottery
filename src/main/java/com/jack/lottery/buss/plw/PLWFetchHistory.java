@@ -37,11 +37,17 @@ public class PLWFetchHistory {
     private LotteryService lotteryService;
 
     public boolean fetchPLWHistory(String termNo) {
-        String result = getPLWHistory(termNo).getResult();
+        LotteryHistory plwHistory = getPLWHistory(termNo);
+        String result = plwHistory.getResult();
         if (StringUtils.isBlank(result)) {
             return false;
         }
-        lotteryService.updateTermByTermNo(LotteryType.PLW, termNo, result);
+        List<PrizeDetail> details = plwHistory.getDetails();
+        String prizeDetail = "";
+        if (null != details) {
+            prizeDetail = JSONObject.toJSONString(details).replace("\"addNum\":0,", "");
+        }
+        lotteryService.updateTermByTermNo(LotteryType.PLW, termNo, result, prizeDetail);
         return true;
     }
 

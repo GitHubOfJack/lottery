@@ -9,12 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
 @Component
+@EnableScheduling
 public class CurrentTermFetchTask {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -50,10 +52,11 @@ public class CurrentTermFetchTask {
     private SDFetchCurrent sdFetchCurrent;
 
     //每周二、四、日晚上8点开始抓取新一期期号
-    @Scheduled(cron = "0 0 20 0 0 1,3,5 *")
+    @Scheduled(cron = "0 0 20 ? * 1,3,5")
     public void ssq() {
         if (!ssqSwitch) {
             logger.info("双色球抓取当前期开关关闭!");
+            return;
         }
         boolean success = false;
         int num = 0;
@@ -74,10 +77,11 @@ public class CurrentTermFetchTask {
     }
 
     //每周一、三、六晚上8点开始抓取新一期期号
-    @Scheduled(cron = "0 0 20 0 0 2,4,7 *")
+    @Scheduled(cron = "0 0 20 ? * 2,4,7")
     public void dlt() {
         if (!dltSwitch) {
             logger.info("大乐透抓取当前期开关关闭!");
+            return;
         }
         boolean success = false;
         int num = 0;
@@ -98,10 +102,11 @@ public class CurrentTermFetchTask {
     }
 
     //每天晚上8点开始抓取新一期期号
-    @Scheduled(cron = "0 0 20 * * * *")
+    @Scheduled(cron = "0 0 20 * * *")
     public void pls() {
         if (!plsSwitch) {
             logger.info("排列三抓取当前期开关关闭!");
+            return;
         }
         boolean success = false;
         int num = 0;
@@ -122,10 +127,11 @@ public class CurrentTermFetchTask {
     }
 
     //每天晚上8点开始抓取新一期期号
-    @Scheduled(cron = "0 0 20 * * * *")
+    @Scheduled(cron = "0 0 20 * * *")
     public void plw() {
         if (!plwSwitch) {
             logger.info("排列五抓取当前期开关关闭!");
+            return;
         }
         boolean success = false;
         int num = 0;
@@ -146,10 +152,11 @@ public class CurrentTermFetchTask {
     }
 
     //每天晚上8点开始抓取新一期期号
-    @Scheduled(cron = "0 0 20 * * * *")
+    @Scheduled(cron = "0 0 20 * * *")
     public void sd() {
         if (!sdSwitch) {
             logger.info("3D抓取当前期开关关闭!");
+            return;
         }
         boolean success = false;
         int num = 0;

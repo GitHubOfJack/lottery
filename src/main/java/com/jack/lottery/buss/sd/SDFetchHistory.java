@@ -37,11 +37,17 @@ public class SDFetchHistory {
     private LotteryService lotteryService;
 
     public boolean fetchSDHistory(String termNo) {
-        String result = getSDHistory(termNo).getResult();
+        LotteryHistory sdHistory = getSDHistory(termNo);
+        String result = sdHistory.getResult();
         if (StringUtils.isBlank(result)) {
             return false;
         }
-        lotteryService.updateTermByTermNo(LotteryType.SD, termNo, result);
+        List<PrizeDetail> details = sdHistory.getDetails();
+        String prizeDetail = "";
+        if (null != details) {
+            prizeDetail = JSONObject.toJSONString(details).replace("\"addNum\":0,", "");
+        }
+        lotteryService.updateTermByTermNo(LotteryType.SD, termNo, result, prizeDetail);
         return true;
     }
 

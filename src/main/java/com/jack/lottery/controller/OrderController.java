@@ -91,7 +91,12 @@ public class OrderController {
         }
     }
 
-    @RequestMapping("getLotteryOrderDetail")
+    /**
+     * 获取订单详情
+     * @param userId 用户编号
+     * @param orderId 订单ID
+     * */
+    @RequestMapping("/getLotteryOrderDetail")
     public CommonResponose<LotteryOrderDetail> getLotteryOrderDetail(long userId, long orderId) {
         try {
             checkGetLotteryOrderDetail(userId, orderId);

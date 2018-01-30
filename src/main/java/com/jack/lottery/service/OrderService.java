@@ -195,7 +195,7 @@ public class OrderService {
         LotteryOrderDetail detail = new LotteryOrderDetail();
         LotteryTerm term = lotteryService.getLotteryTermByTypeAndNo(order.getLotteryType(), order.getLotteryTerm());
         detail.setOrderDetailInfo(detail.buildOrderDetailInfo(order, term));
-        detail.setTicketDetailInfo(detail.buildTicketDetailInfo(order.getMsg()));
+        detail.setTicketDetailInfos(detail.buildTicketDetailInfo(order.getMsg()));
         return detail;
     }
 }

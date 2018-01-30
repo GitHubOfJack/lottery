@@ -13,12 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
 @Component
+@EnableScheduling
 public class HistoryTermFetchTask {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -67,10 +70,11 @@ public class HistoryTermFetchTask {
     private SDFetchHistory sdFetchHistory;
 
     //每周二、四、日晚上9点35开奖
-    @Scheduled(cron = "0 40 21 0 0 1,3,5 *")
+    @Scheduled(cron = "0 40 21 ? * 1,3,5")
     public void fetchSSQ() {
         if (!ssqSwitch) {
             logger.info("双色球抓取上期开奖结果开关关闭!");
+            return;
         }
         String termNo = null;
         try {
@@ -100,10 +104,11 @@ public class HistoryTermFetchTask {
     }
 
     //每周一、三、六晚上8点40开奖
-    @Scheduled(cron = "0 45 20 0 0 2,4,7 *")
+    @Scheduled(cron = "0 45 20 ? * 2,4,7")
     public void fetchDLT() {
         if (!dltSwitch) {
             logger.info("大乐透抓取上期开奖结果开关关闭!");
+            return;
         }
         String termNo = null;
         try {
@@ -133,10 +138,11 @@ public class HistoryTermFetchTask {
     }
 
     //每天晚上8点35开奖
-    @Scheduled(cron = "0 40 20 * * * *")
+    @Scheduled(cron = "0 40 20 * * *")
     public void fetchPLS() {
         if (!plsSwitch) {
             logger.info("排列三抓取上期开奖结果开关关闭!");
+            return;
         }
         String termNo = null;
         try {
@@ -166,10 +172,11 @@ public class HistoryTermFetchTask {
     }
 
     //每天晚上8点50开奖
-    @Scheduled(cron = "0 55 20 * * * *")
+    @Scheduled(cron = "0 55 20 * * *")
     public void fetchPLW() {
         if (!plwSwitch) {
             logger.info("排列五抓取上期开奖结果开关关闭!");
+            return;
         }
         String termNo = null;
         try {
@@ -199,10 +206,11 @@ public class HistoryTermFetchTask {
     }
 
     //每天晚上9点15开奖
-    @Scheduled(cron = "0 20 21 * * * *")
+    @Scheduled(cron = "0 20 21 * * *")
     public void fetchSD() {
         if (!sdSwitch) {
             logger.info("福彩3D抓取上期开奖结果开关关闭!");
+            return;
         }
         String termNo = null;
         try {

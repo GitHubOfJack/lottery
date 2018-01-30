@@ -37,11 +37,17 @@ public class DLTFetchHistory {
     private LotteryService lotteryService;
 
     public boolean fetchDLTHistory(String termNo) {
-        String result = getDLTHistory(termNo).getResult();
+        LotteryHistory dltHistory = getDLTHistory(termNo);
+        String result = dltHistory.getResult();
         if (StringUtils.isBlank(result)) {
             return false;
         }
-        lotteryService.updateTermByTermNo(LotteryType.DLT, termNo, result);
+        List<PrizeDetail> details = dltHistory.getDetails();
+        String prizeDetail = "";
+        if (null != details) {
+            prizeDetail = JSONObject.toJSONString(details).replace("\"addNum\":0,", "");
+        }
+        lotteryService.updateTermByTermNo(LotteryType.DLT, termNo, result, prizeDetail);
         return true;
     }
 

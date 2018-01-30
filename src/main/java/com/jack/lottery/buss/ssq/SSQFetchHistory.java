@@ -38,11 +38,17 @@ public class SSQFetchHistory {
 
     //获取上期开奖结果
     public boolean fetchSSQHistory(String termNo) {
-        String result = getSSQHistory(termNo).getResult();
+        LotteryHistory ssqHistory = getSSQHistory(termNo);
+        String result = ssqHistory.getResult();
         if (StringUtils.isBlank(result)) {
             return false;
         }
-        lotteryService.updateTermByTermNo(LotteryType.SSQ, termNo, result);
+        List<PrizeDetail> details = ssqHistory.getDetails();
+        String prizeDetail = "";
+        if (null != details) {
+            prizeDetail = JSONObject.toJSONString(details).replace("\"addNum\":0,", "");
+        }
+        lotteryService.updateTermByTermNo(LotteryType.SSQ, termNo, result, prizeDetail);
         return true;
     }
 
