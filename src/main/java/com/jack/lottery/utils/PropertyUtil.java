@@ -11,8 +11,11 @@ public class PropertyUtil {
 
     private static Properties props;
 
+    private static List<String> ignorUrls;
+
     static{
         loadProps();
+        ignorUrls = Arrays.asList(getProperty("ignor.login.urls").split(";"));
     }
 
     synchronized static private void loadProps(){
@@ -45,11 +48,14 @@ public class PropertyUtil {
     }
 
     public static boolean contains(String uri) {
-        List<String> ignorUrls = Arrays.asList(getProperty("ignor.login.urls").split(";"));
         if (ignorUrls.contains(uri)) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(ignorUrls);
     }
 }

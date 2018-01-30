@@ -269,7 +269,7 @@ public class UserController {
     /**
      * 实名接口
      * */
-    @RequestMapping("identify")
+    @RequestMapping("/identify")
     public CommonResponose<Boolean> identify(long userId, String realName, String idType, String idNo) {
         try {
             checkIdentifyParam(userId, realName, idType, idNo);
@@ -303,7 +303,7 @@ public class UserController {
     /**
      * 绑卡接口
      * */
-    @RequestMapping("bindCard")
+    @RequestMapping("/bindCard")
     public CommonResponose<Boolean> bindCard(long userId, String cardNo, String branch,
                                              String province, String city, String bankName,
                                              String name) {
