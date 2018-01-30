@@ -152,7 +152,7 @@ public class LotteryBuss {
             throw new ParamException("投注格式不正确");
         }
         for (String s : contents) {
-            if (StringUtils.isBlank(s) || !StringUtils.isNumeric(s) || !isBetween(s, "0", "9")) {
+            if (StringUtils.isBlank(s) || !StringUtils.isNumeric(s) || !isBetween(s, "9", "0")) {
                 throw new ParamException("投注格式不正确");
             }
         }
@@ -165,7 +165,7 @@ public class LotteryBuss {
             throw new ParamException("投注格式不正确");
         }
         for (String s : contents) {
-            if (StringUtils.isBlank(s) || !StringUtils.isNumeric(s) || !isBetween(s, "0", "9")) {
+            if (StringUtils.isBlank(s) || !StringUtils.isNumeric(s) || !isBetween(s, "9", "0")) {
                 throw new ParamException("投注格式不正确");
             }
         }
@@ -186,7 +186,7 @@ public class LotteryBuss {
             String[] parts = part.split("");
             totalNum = totalNum * parts.length;
             for (String s : parts) {
-                if (StringUtils.isBlank(s) || !StringUtils.isNumeric(s) || !isBetween(s, "0", "9")) {
+                if (StringUtils.isBlank(s) || !StringUtils.isNumeric(s) || !isBetween(s, "9", "0")) {
                     throw new ParamException("投注格式不正确");
                 }
             }
