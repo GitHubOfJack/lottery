@@ -30,7 +30,7 @@
     <net.sf.json.version>2.4</net.sf.json.version>
     <xom.version>1.2.5</xom.version>
     <servlet.version>3.1.0</servlet.version>
-    <jackson.version>2.5.4</jackson.version>
+    <jackson.version>2.10.1</jackson.version>
     <jsoup.version>1.11.2</jsoup.version>
     <guava.version>23.6-jre</guava.version>
     <maven.war.plugin.version>2.5</maven.war.plugin.version>
