@@ -12,7 +12,7 @@
     <commons.dhcp>1.4</commons.dhcp>
     <commons.lang3>3.4</commons.lang3>
     <commons.beanutils>1.9.2</commons.beanutils>
-    <commons.io>2.4</commons.io>
+    <commons.io>2.7</commons.io>
     <commons.codec>1.10</commons.codec>
     <commons.validator>1.4.1</commons.validator>
     <commons.pool.version>1.6</commons.pool.version>
