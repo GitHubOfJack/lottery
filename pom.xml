@@ -24,7 +24,7 @@
     <mybatis.spring.version>1.2.2</mybatis.spring.version>
     <mysql-connector.version>5.1.23</mysql-connector.version>
     <slf4j.version>1.7.6</slf4j.version>
-    <logback.version>1.1.2</logback.version>
+    <logback.version>1.2.0</logback.version>
     <mybatis.pagehelp>5.0.0</mybatis.pagehelp>
     <fastjson.version>1.2.28</fastjson.version>
     <net.sf.json.version>2.4</net.sf.json.version>
